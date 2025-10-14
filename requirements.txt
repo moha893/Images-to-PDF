@@ -2,3 +2,4 @@ Flask
 Werkzeug
 img2pdf
 gunicorn
+Flask-Cors
