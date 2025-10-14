@@ -3,12 +3,12 @@ from flask import Flask, request, render_template, send_file
 from werkzeug.utils import secure_filename
 import img2pdf
 import logging
+import io # <-- تأكد من إضافة هذا السطر
 
 # إعداد التطبيق
 app = Flask(__name__)
 
 # تحديد مجلد مؤقت لتخزين الصور المرفوعة
-# سنستخدم المسار 'tmp' الذي تدعمه العديد من منصات الاستضافة مثل Render
 UPLOAD_FOLDER = '/tmp/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -22,7 +22,6 @@ except OSError as e:
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        # التحقق من وجود ملفات مرفوعة
         if 'images' not in request.files:
             return "No file part", 400
 
@@ -34,7 +33,6 @@ def index():
                 continue
             if file:
                 filename = secure_filename(file.filename)
-                # استخدام المسار المؤقت لتخزين الملف
                 filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 try:
                     file.save(filepath)
@@ -43,43 +41,42 @@ def index():
                     logging.error(f"Error saving file {filepath}: {e}")
                     return "Error saving file", 500
 
-
         if not image_paths:
             return "No selected file", 400
 
-        # إنشاء ملف PDF في المجلد المؤقت
         pdf_path = os.path.join(app.config['UPLOAD_FOLDER'], "output.pdf")
         
         try:
-            # تحويل الصور إلى PDF
+            # 1. إنشاء ملف الـ PDF على القرص
             with open(pdf_path, "wb") as f:
                 f.write(img2pdf.convert(image_paths))
+
+            # 2. قراءة محتوى الملف إلى الذاكرة
+            with open(pdf_path, 'rb') as f:
+                pdf_bytes = f.read()
+
+            # 3. إنشاء "ملف في الذاكرة" لإرساله للمستخدم
+            pdf_stream = io.BytesIO(pdf_bytes)
+            
+            return send_file(
+                pdf_stream,
+                as_attachment=True,
+                download_name='converted.pdf',
+                mimetype='application/pdf'
+            )
+
         except Exception as e:
-            # حذف الصور المؤقتة في حالة حدوث خطأ
-            for path in image_paths:
-                os.remove(path)
-            logging.error(f"Error converting to PDF: {e}")
+            logging.error(f"Error during PDF conversion or cleanup: {e}")
             return "Error converting to PDF", 500
 
+        finally:
+            # 4. حذف كل الملفات المؤقتة (هذا الجزء سيعمل دائمًا)
+            for path in image_paths:
+                if os.path.exists(path):
+                    os.remove(path)
+            if os.path.exists(pdf_path):
+                os.remove(pdf_path)
 
-        # بعد إرسال الملف، يجب حذف الملفات المؤقتة
-        # (الصور وملف الـ PDF)
-        @app.after_request
-        def cleanup(response):
-            try:
-                for path in image_paths:
-                    if os.path.exists(path):
-                        os.remove(path)
-                if os.path.exists(pdf_path):
-                    os.remove(pdf_path)
-            except Exception as e:
-                logging.error(f"Error during cleanup: {e}")
-            return response
-
-        # إرسال ملف الـ PDF للمستخدم ليقوم بتحميله
-        return send_file(pdf_path, as_attachment=True, download_name='converted.pdf')
-
-    # في حالة كانت الطلب GET، فقط اعرض الصفحة الرئيسية
     return render_template('index.html')
 
 if __name__ == '__main__':
