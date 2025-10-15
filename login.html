@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول — Mega</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    <style>
+        :root {
+            --dark-bg: #121212; 
+            --secondary-bg: #1e1e1e; 
+            --text-color: #ffffff;
+            --primary-color: #007bff; 
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+        body {
+            font-family: "Cairo", sans-serif; 
+            background-color: var(--dark-bg);
+            color: var(--text-color); 
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
+            min-height: 100vh; 
+            margin: 0;
+        }
+        .login-container {
+            background-color: var(--secondary-bg); 
+            padding: 40px;
+            border-radius: 12px; 
+            border: 1px solid var(--border-color);
+            text-align: center; 
+            width: 90%; 
+            max-width: 400px;
+        }
+        h1 { 
+            margin-top: 0; 
+        }
+        p { 
+            color: #a0a0a0; 
+        }
+        .terms { 
+            margin: 20px 0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        .terms label { 
+            margin-inline-start: 10px; 
+        }
+        .terms a { 
+            color: var(--primary-color); 
+            text-decoration: none; 
+        }
+        .h-captcha { 
+            margin: 20px 0; 
+            display: flex;
+            justify-content: center;
+        }
+        #google-signin-btn {
+            background-color: #4285F4; 
+            color: white; 
+            border: none; 
+            padding: 12px 24px;
+            font-family: inherit; 
+            font-size: 16px; 
+            border-radius: 8px; 
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #google-signin-btn:disabled { 
+            background-color: #333; 
+            cursor: not-allowed; 
+            opacity: 0.6;
+        }
+        #message { 
+            margin-top: 15px; 
+            color: #ff6b6b; 
+            font-weight: bold;
+            min-height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>تسجيل الدخول</h1>
+        <p>مرحبًا بك! سجل دخولك للمتابعة.</p>
+        
+        <div class="terms">
+            <input type="checkbox" id="terms-checkbox">
+            <label for="terms-checkbox">
+                أوافق على <a href="PrivacyandTermsofService.html" target="_blank">شروط الخدمة</a>
+            </label>
+        </div>
+
+        <div class="h-captcha" data-sitekey="53d8ae34-2c6a-4b4a-9178-988ed78ad00a"></div>
+        
+        <button id="google-signin-btn" disabled>تسجيل الدخول عبر جوجل</button>
+
+        <p id="message"></p>
+    </div>
+
+    </body>
+</html>
