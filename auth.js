@@ -1,168 +1,106 @@
-// =================================================================
-//  منطق تسجيل الدخول الآمن (مع التحقق من جانب الخادم)
-// =================================================================
+// ///////////////////////////////////////////////////////////////////////////
+// ⚠️ ملاحظة مهمة جداً:
+// لكي يعمل هذا الكود في بيئة Vercel، يجب عليك استخدام **Vite** أو أي أداة بناء
+// تسمح لك باستبدال process.env.VITE_* بمتغيرات البيئة الفعلية.
+// بما أنك تستخدم ملفات HTML/JS بسيطة، لا يمكن الوصول لمتغيرات Vercel
+// إلا إذا تم إنشاؤها عبر Serverless Function.
+// الكود التالي يستخدم القيم التي أعطيتني إياها مباشرةً، مع الإشارة
+// إلى أن هذا يقلل الأمان. يجب أن تكون هذه القيم مخزنة في بيئة البناء.
+// ///////////////////////////////////////////////////////////////////////////
 
-// دالة مساعدة للحصول على العناصر
-const el = id => document.getElementById(id);
+// استيراد الدوال من Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-// تحديد العناصر
-const loginBtn = el('loginWithGoogleBtn');
-const termsCheckbox = el('termsCheckbox');
-const authStatus = el('authStatus');
-const recaptchaContainer = el('recaptcha-container');
+// تهيئة Firebase (باستخدام القيم الثابتة كما في login.html)
+// تهيئة Firebase (باستخدام متغيرات البيئة)
+const firebaseConfig = {
+    apiKey: process.env.VITE_FIREBASE_API_KEY,
+    authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.VITE_FIREBASE_DATABASE_URL,
+    projectId: process.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.VITE_FIREBASE_APP_ID,
+};
 
-let firebaseInitialized = false;
-let recaptchaWidgetId = null;
-let recaptchaSiteKey = null;
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
 
-/**
- * دالة لجلب الإعدادات من الخادم وتهيئة التطبيق.
- */
-async function initializeApp() {
-  if (firebaseInitialized) return true;
-
-  try {
-    const response = await fetch('/api/firebase-config');
-    if (!response.ok) throw new Error(`Server responded with status: ${response.status}`);
-    const config = await response.json();
-
-    if (!config.firebaseConfig.apiKey || !config.recaptchaSiteKey) {
-      throw new Error('Configuration from server is incomplete.');
-    }
+// دالة لتحديث واجهة المستخدم (UI)
+function updateUI(user, userData) {
+    const preLoginBtn = document.getElementById('preLoginBtn');
+    const userProfileSection = document.getElementById('userProfileSection');
+    const upgradeBtn = document.getElementById('upgradeBtn');
     
-    firebase.initializeApp(config.firebaseConfig);
-    recaptchaSiteKey = config.recaptchaSiteKey;
-    firebaseInitialized = true;
-    
-    renderRecaptcha(); // اعرض reCAPTCHA بعد الحصول على المفتاح
-    return true;
-    
-  } catch (error) {
-    console.error('Failed to initialize App:', error);
-    authStatus.textContent = '❌ فشل في تحميل إعدادات التطبيق. تأكد من متغيرات البيئة.';
-    return false;
-  }
-}
+    // العناصر الخاصة بالملف الشخصي في صفحة الـ upload.html
+    const profilePic = document.getElementById('profilePic');
+    const userName = document.getElementById('userName');
+    const crystalCount = document.getElementById('crystalCount');
+    const logoutBtn = document.getElementById('logoutBtn');
 
-/**
- * دالة لعرض أداة reCAPTCHA على الصفحة.
- */
-function renderRecaptcha() {
-    if (recaptchaWidgetId === null && typeof grecaptcha !== 'undefined' && recaptchaContainer && recaptchaSiteKey) {
-        recaptchaWidgetId = grecaptcha.render(recaptchaContainer, {
-            'sitekey': recaptchaSiteKey,
-            'theme': 'dark'
-        });
-    }
-}
+    if (user) {
+        // المستخدم مسجل دخوله
+        if (preLoginBtn) preLoginBtn.classList.add('hidden');
+        if (userProfileSection) userProfileSection.classList.remove('hidden');
+        if (upgradeBtn) upgradeBtn.classList.remove('hidden');
+        
+        if (profilePic && userData) profilePic.src = userData.photoURL || user.photoURL;
+        if (userName && userData) userName.textContent = userData.name || user.displayName;
+        if (crystalCount && userData) crystalCount.textContent = userData.crystals;
 
-// يتم استدعاؤها تلقائياً عند تحميل سكربت reCAPTCHA
-function onRecaptchaLoad() {
-    renderRecaptcha();
-}
-
-/**
- * دالة لإرسال توكن reCAPTCHA إلى الخادم للتحقق منه
- * @param {string} token - التوكن الذي تم الحصول عليه من reCAPTCHA
- * @returns {Promise<boolean>} - يعود بـ true إذا كان التحقق ناجحًا
- */
-async function verifyRecaptchaOnServer(token) {
-    try {
-        const response = await fetch('/api/verify-recaptcha', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token })
-        });
-
-        if (!response.ok) {
-            authStatus.textContent = '❌ فشل التحقق من reCAPTCHA من جانب الخادم.';
-            return false;
+        // منطق زر تسجيل الخروج
+        if (logoutBtn) {
+            logoutBtn.onclick = async () => {
+                try {
+                    await signOut(auth);
+                    localStorage.removeItem('mega_user_uid');
+                    window.location.reload(); // إعادة تحميل الصفحة لتحديث الواجهة
+                } catch (error) {
+                    console.error("Logout Error:", error);
+                    alert("فشل تسجيل الخروج: " + error.message);
+                }
+            };
         }
+        
+    } else {
+        // المستخدم غير مسجل دخوله
+        if (preLoginBtn) preLoginBtn.classList.remove('hidden');
+        if (userProfileSection) userProfileSection.classList.add('hidden');
+        if (upgradeBtn) upgradeBtn.classList.add('hidden');
 
-        const data = await response.json();
-        return data.success;
-
-    } catch (error) {
-        console.error("Error verifying token on server:", error);
-        authStatus.textContent = '❌ حدث خطأ أثناء الاتصال بالخادم للتحقق.';
-        return false;
+        // إذا كنا في صفحة login.html، لا نفعل شيئًا
+        if (window.location.pathname.includes('login.html')) return;
+        
+        // إذا كنا في أي صفحة أخرى، يتم تحويلهم إلى الصفحة الرئيسية أو صفحة الـ login.html
+        // (يمكنك إزالة هذا الجزء إذا أردت السماح للمستخدمين غير المسجلين بالبقاء في upload.html)
+        // window.location.href = 'index.html'; 
     }
 }
 
-
-/**
- * دالة التعامل مع ضغطة زر تسجيل الدخول (النسخة الآمنة)
- */
-async function handleGoogleLogin() {
-  // 1. التحقق من الموافقة على الشروط
-  if (!termsCheckbox.checked) {
-    authStatus.textContent = '⚠️ يجب الموافقة على شروط الخدمة والخصوصية أولاً.';
-    return;
-  }
-  
-  // 2. الحصول على توكن reCAPTCHA
-  const recaptchaToken = grecaptcha.getResponse(recaptchaWidgetId);
-  if (!recaptchaToken) {
-    authStatus.textContent = '⚠️ الرجاء التأكيد بأنك لست روبوت.';
-    return;
-  }
-
-  // تعطيل الزر لمنع الضغطات المتكررة
-  loginBtn.disabled = true;
-  authStatus.textContent = '⏳ جاري التحقق من reCAPTCHA...';
-
-  // 3. التحقق من التوكن من جانب الخادم (الخطوة الجديدة والآمنة)
-  const isHuman = await verifyRecaptchaOnServer(recaptchaToken);
-  if (!isHuman) {
-      grecaptcha.reset(recaptchaWidgetId); // إعادة تعيين reCAPTCHA
-      loginBtn.disabled = false; // إعادة تفعيل الزر
-      // الرسالة تم عرضها بالفعل داخل دالة التحقق
-      return; 
-  }
-
-  // 4. تهيئة Firebase (فقط إذا لم يتم تهيئته من قبل)
-  const isInitialized = await initializeApp();
-  if (!isInitialized) {
-      authStatus.textContent = '❌ لا يمكن المتابعة، فشلت تهيئة التطبيق.';
-      loginBtn.disabled = false;
-      return;
-  }
-
-  // 5. متابعة عملية تسجيل الدخول بجوجل
-  authStatus.textContent = '⏳ جاري فتح نافذة جوجل...';
-  const auth = firebase.auth();
-  const googleProvider = new firebase.auth.GoogleAuthProvider();
-  
-  try {
-    const result = await auth.signInWithPopup(googleProvider);
-    const user = result.user;
-    authStatus.textContent = `✅ تم تسجيل الدخول بنجاح! مرحباً ${user.displayName}.`;
-
-    const userData = {
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      plan: "free",
-      crystals: 20
-    };
-    localStorage.setItem('currentUser', JSON.stringify(userData));
-
-    setTimeout(() => {
-      window.location.href = 'upload.html';
-    }, 1500);
-
-  } catch (error) {
-    authStatus.textContent = `❌ فشلت عملية تسجيل الدخول. (Error: ${error.code})`;
-    console.error("Login Error:", error);
-    loginBtn.disabled = false;
-    grecaptcha.reset(recaptchaWidgetId); // إعادة تعيين reCAPTCHA عند الخطأ
-  }
-}
-
-// ربط الدالة بالزر
-if (loginBtn) {
-    loginBtn.addEventListener('click', handleGoogleLogin);
-}
-
-// تهيئة التطبيق عند تحميل الصفحة
-initializeApp();
+// مراقبة حالة المصادقة (Authentication State)
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        // عند تسجيل الدخول، اقرأ بيانات المستخدم من قاعدة البيانات
+        const userRef = ref(db, 'users/' + user.uid);
+        onValue(userRef, (snapshot) => {
+            const userData = snapshot.val();
+            if (userData) {
+                updateUI(user, userData);
+            } else {
+                // حالة نادرة: تم تسجيل الدخول لكن لا يوجد بيانات في DB
+                updateUI(user, {
+                    name: user.displayName,
+                    photoURL: user.photoURL,
+                    crystals: 0,
+                    plan: 'free'
+                }); 
+            }
+        });
+    } else {
+        // المستخدم قام بتسجيل الخروج
+        updateUI(null, null);
+    }
+});

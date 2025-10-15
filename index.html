@@ -579,10 +579,10 @@
                     <p data-key="loginDesc">سجل دخولك للحصول على مزيد من الإضافات المميزة قريبًا.</p>
                 </div>
                 <div class="login-action">
-                    <button class="google-login-button">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google G Logo">
-                        <span data-key="loginButton">تسجيل الدخول عبر جوجل</span>
-                    </button>
+                    <a href="login.html" class="google-login-button" data-key="loginButtonLink">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google G Logo">
+    <span data-key="loginButton">تسجيل الدخول عبر جوجل</span>
+</a>
                 </div>
             </div>
         </div>
@@ -664,6 +664,6 @@
 
         applyTranslation(state.lang);
     </script>
-    
+    <script type="module" src="auth.js"></script>
 </body>
 </html>
