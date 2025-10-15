@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="pageTitle">من نحن — Mega</title>
+    
+    <meta name="description" content="تعرف على الفريق الذي يقف خلف Mega، مهمتنا، وقصتنا. نحن فريق صغير شغوف بتقديم أدوات مجانية وآمنة للجميع.">
+    
+    <meta name="keywords" lang="ar" content="عن ميجا, فريق عمل ميجا, قصة ميجا, شايب محمد رمزي, L.zero, مطور جزائري, مطور روسي, مهمة ميجا, اتصل بنا"/>
+    <meta name="keywords" lang="en" content="about mega, mega team, mega story, Chaib Mohamed Ramzi, L.zero, algerian developer, russian developer, mega mission, contact us"/>
+    <meta name="keywords" lang="es" content="sobre mega, equipo de mega, historia de mega, Chaib Mohamed Ramzi, L.zero, desarrollador argelino, desarrollador ruso, misión de mega, contáctenos"/>
+    <meta name="keywords" lang="fr" content="à propos de mega, équipe mega, histoire de mega, Chaib Mohamed Ramzi, L.zero, développeur algérien, développeur russe, mission de mega, contactez-nous"/>
+    <meta name="keywords" lang="ru" content="о мега, команда мега, история мега, Chaib Mohamed Ramzi, L.zero, алжирский разработчик, российский разработчик, миссия мега, свяжитесь с нами"/>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;70.0&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        :root {
+            --dark-bg: #121212; --secondary-bg: #1e1e1e; --card-bg: #2a2a2a; --text-color: #ffffff;
+            --text-muted: #a0a0a0; --primary-color: #007bff; --border-color: rgba(255, 255, 255, 0.1);
+        }
+        html:lang(en), html:lang(es), html:lang(fr), html:lang(ru) { direction: ltr; }
+        html:lang(en) body, html:lang(es) body, html:lang(fr) body, html:lang(ru) body { font-family: "Roboto", sans-serif; }
+        html:lang(ar) body { font-family: "Cairo", sans-serif; }
+        body { margin: 0; background-color: var(--dark-bg); color: var(--text-color); line-height: 1.8; }
+        .container { width: 90%; max-width: 900px; margin: 40px auto; padding: 20px; }
+        h1, h2 { color: var(--text-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-top: 30px; }
+        h1 { text-align: center; font-size: 2.5em; }
+        p { color: var(--text-muted); font-size: 1.1em; }
+        .intro-section { text-align: center; margin-bottom: 50px; }
+        .team-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .team-member-card { background-color: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 25px; text-align: center; }
+        .team-member-card h3 { margin-top: 0; font-size: 1.5em; }
+        .team-member-card .role { color: var(--primary-color); font-weight: bold; margin-bottom: 15px; }
+        .team-member-card .details { color: var(--text-muted); font-size: 0.95em; }
+        .social-links a { color: var(--text-muted); margin: 0 10px; font-size: 1.8em; transition: color 0.3s; }
+        .social-links a:hover { color: var(--primary-color); }
+        .contact-section, .final-image-section { text-align: center; margin-top: 50px; }
+        .contact-section a { color: var(--primary-color); text-decoration: none; font-weight: bold; font-size: 1.2em; }
+        .final-image { max-width: 100%; width: 500px; border-radius: 12px; margin-top: 20px; }
+        
+        /* Header and Language Switcher Styles */
+        .site-header { padding: 15px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
+        .container-header { width: 90%; max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .back-link { color: var(--text-color); font-weight: 700; text-decoration: none; font-size: 1.1em; }
+        .language-switcher { position: relative; display: inline-block; }
+        .selected-lang { background: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; transition: background 0.2s; display: flex; align-items: center; gap: 8px; font-family: inherit; }
+        .lang-dropdown { display: none; position: absolute; top: 110%; right: 0; background-color: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; min-width: 150px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); z-index: 100; overflow: hidden; }
+        .lang-dropdown.show { display: block; }
+        .lang-option { color: var(--text-muted); padding: 12px 16px; text-decoration: none; display: block; font-size: 14px; font-weight: 600; }
+        .lang-option:hover { background-color: var(--primary-color); color: var(--text-color); }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container-header">
+            <a href="index.html" class="back-link" data-key="backToHome">→ العودة للرئيسية</a>
+            <div class="language-switcher">
+                <button class="selected-lang" id="selectedLang">
+                    <span id="currentLangFlag">🇸🇦</span>
+                    <span id="currentLangText">العربية</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <a href="#" class="lang-option" data-lang="ar">🇸🇦 العربية</a>
+                    <a href="#" class="lang-option" data-lang="en">🇬🇧 English</a>
+                    <a href="#" class="lang-option" data-lang="es">🇪🇸 Español</a>
+                    <a href="#" class="lang-option" data-lang="fr">🇫🇷 Français</a>
+                    <a href="#" class="lang-option" data-lang="ru">🇷🇺 Русский</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="intro-section">
+            <h1 data-key="aboutHeader">حول Mega</h1>
+            <p data-key="aboutIntro">مرحبًا بك في Mega. نحن فريق صغير وشغوف، مؤلف من شخصين، نؤمن بأن الأدوات القوية يجب أن تكون بسيطة وآمنة ومتاحة للجميع. بدأت رحلتنا في 15 أكتوبر 2025، بهدف واحد واضح: تلبية احتياجات المستخدمين، ومكافحة الاستغلال الرقمي، ومساعدة أكبر عدد ممكن من الناس.</p>
+            <p data-key="aboutJourney">بدأت الفكرة بموارد متواضعة ولكن برؤية كبيرة، وتطورت على المدى الطويل باستثمار بلغ 5000 دولار لإنشاء منصة يمكنك الوثوق بها.</p>
+        </div>
+
+        <h2 data-key="teamHeader">فريقنا المؤسس</h2>
+        <div class="team-section">
+            <div class="team-member-card">
+                <h3 data-key="teamMember1Name">شايب محمد رمزي</h3>
+                <p class="role" data-key="teamMember1Role">المالك، صاحب الفكرة، والمدير العام</p>
+                <p class="details" data-key="teamMember1Desc">شاب يبلغ من العمر 20 عامًا من أم البواقي، الجزائر. هو العقل المبدع وراء Mega، ويعمل كمطور تطبيقات، مهندس برمجيات، ومبرمج الواجهة الخلفية للموقع.</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/mohamed__04___?igsh=YzljYTk1ODg3Zg==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61556268373402" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            <div class="team-member-card">
+                <h3 data-key="teamMember2Name">L.zero (لوريس زيرو)</h3>
+                <p class="role" data-key="teamMember2Role">مهندس صيانة، مبرمج، ومساعد</p>
+                <p class="details" data-key="teamMember2Desc">مطور ومهندس برمجيات موهوب يبلغ من العمر 23 عامًا من روسيا. يلعب دورًا حيويًا في الحفاظ على استقرار وأداء المنصة. يفضل لوريس الحفاظ على خصوصيته والبقاء بعيدًا عن الأضواء.</p>
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <h2 data-key="contactHeader">تواصل معنا</h2>
+            <p data-key="contactDesc">هل لديك أسئلة أو اقتراحات؟ نود أن نسمع منك! تواصل معنا عبر البريد الإلكتروني:</p>
+            <a href="mailto:brxpara@gmail.com">brxpara@gmail.com</a>
+        </div>
+
+        <div class="final-image-section">
+            <img src="https://i.ibb.co/sd1ns7Cw/MegaXPdf.jpg" alt="Mega X Pdf" class="final-image">
+        </div>
+    </div>
+
+    <script>
+        const state = { lang: 'ar' };
+
+        const translations = {
+            ar: {
+                pageTitle: 'من نحن — Mega', backToHome: '→ العودة للرئيسية', langName: 'العربية', langFlag: '🇸🇦',
+                aboutHeader: 'حول Mega',
+                aboutIntro: 'مرحبًا بك في Mega. نحن فريق صغير وشغوف، مؤلف من شخصين، نؤمن بأن الأدوات القوية يجب أن تكون بسيطة وآمنة ومتاحة للجميع. بدأت رحلتنا في 15 أكتوبر 2025، بهدف واحد واضح: تلبية احتياجات المستخدمين، ومكافحة الاستغلال الرقمي، ومساعدة أكبر عدد ممكن من الناس.',
+                aboutJourney: 'بدأت الفكرة بموارد متواضعة ولكن برؤية كبيرة، وتطورت على المدى الطويل باستثمار بلغ 5000 دولار لإنشاء منصة يمكنك الوثوق بها.',
+                teamHeader: 'فريقنا المؤسس',
+                teamMember1Name: 'شايب محمد رمزي',
+                teamMember1Role: 'المالك، صاحب الفكرة، والمدير العام',
+                teamMember1Desc: 'شاب يبلغ من العمر 20 عامًا من أم البواقي، الجزائر. هو العقل المبدع وراء Mega، ويعمل كمطور تطبيقات، مهندس برمجيات، ومبرمج الواجهة الخلفية للموقع.',
+                teamMember2Name: 'L.zero (لوريس زيرو)',
+                teamMember2Role: 'مهندس صيانة، مبرمج، ومساعد',
+                teamMember2Desc: 'مطور ومهندس برمجيات موهوب يبلغ من العمر 23 عامًا من روسيا. يلعب دورًا حيويًا في الحفاظ على استقرار وأداء المنصة. يفضل لوريس الحفاظ على خصوصيته والبقاء بعيدًا عن الأضواء.',
+                contactHeader: 'تواصل معنا',
+                contactDesc: 'هل لديك أسئلة أو اقتراحات؟ نود أن نسمع منك! تواصل معنا عبر البريد الإلكتروني:',
+            },
+            en: {
+                pageTitle: 'About Us — Mega', backToHome: '→ Back to Home', langName: 'English', langFlag: '🇬🇧',
+                aboutHeader: 'About Mega',
+                aboutIntro: 'Welcome to Mega. We are a small and passionate two-person team who believe that powerful tools should be simple, secure, and accessible to everyone. Our journey began on October 15, 2025, with one clear goal: to meet user needs, combat digital exploitation, and help as many people as possible.',
+                aboutJourney: 'The idea started with modest resources but a grand vision, and it evolved over the long term with an investment of $5,000 to create a platform you can trust.',
+                teamHeader: 'Our Founding Team',
+                teamMember1Name: 'Chaib Mohamed Ramzi',
+                teamMember1Role: 'Owner, Idea Creator & General Manager',
+                teamMember1Desc: 'A 20-year-old from Oum El Bouaghi, Algeria. He is the creative mind behind Mega, serving as an application developer, software engineer, and backend programmer for the site.',
+                teamMember2Name: 'L.zero (Loris Zero)',
+                teamMember2Role: 'Maintenance Engineer, Programmer & Assistant',
+                teamMember2Desc: 'A talented 23-year-old developer and software engineer from Russia. He plays a vital role in maintaining the platform\'s stability and performance. Loris prefers to maintain his privacy and stay out of the spotlight.',
+                contactHeader: 'Contact Us',
+                contactDesc: 'Have questions or suggestions? We\'d love to hear from you! Contact us via email:',
+            },
+            es: {
+                pageTitle: 'Sobre Nosotros — Mega', backToHome: '→ Volver al Inicio', langName: 'Español', langFlag: '🇪🇸',
+                aboutHeader: 'Sobre Mega',
+                aboutIntro: 'Bienvenido a Mega. Somos un pequeño y apasionado equipo de dos personas que cree que las herramientas potentes deben ser simples, seguras y accesibles para todos. Nuestro viaje comenzó el 15 de octubre de 2025, con un objetivo claro: satisfacer las necesidades de los usuarios, combatir la explotación digital y ayudar a la mayor cantidad de gente posible.',
+                aboutJourney: 'La idea comenzó con recursos modestos pero una gran visión, y evolucionó a largo plazo con una inversión de $5,000 para crear una plataforma en la que puedes confiar.',
+                teamHeader: 'Nuestro Equipo Fundador',
+                teamMember1Name: 'Chaib Mohamed Ramzi',
+                teamMember1Role: 'Propietario, Creador de la Idea y Director General',
+                teamMember1Desc: 'Un joven de 20 años de Oum El Bouaghi, Argelia. Es la mente creativa detrás de Mega, y trabaja como desarrollador de aplicaciones, ingeniero de software y programador backend del sitio.',
+                teamMember2Name: 'L.zero (Loris Zero)',
+                teamMember2Role: 'Ingeniero de Mantenimiento, Programador y Asistente',
+                teamMember2Desc: 'Un talentoso desarrollador e ingeniero de software de 23 años de Rusia. Juega un papel vital en el mantenimiento de la estabilidad y el rendimiento de la plataforma. Loris prefiere mantener su privacidad y permanecer fuera del foco de atención.',
+                contactHeader: 'Contáctanos',
+                contactDesc: '¿Tienes preguntas o sugerencias? ¡Nos encantaría saber de ti! Contáctanos por correo electrónico:',
+            },
+            fr: {
+                pageTitle: 'À Propos — Mega', backToHome: '→ Retour à l\'accueil', langName: 'Français', langFlag: '🇫🇷',
+                aboutHeader: 'À Propos de Mega',
+                aboutIntro: 'Bienvenue chez Mega. Nous sommes une petite équipe passionnée de deux personnes qui croit que les outils puissants doivent être simples, sécurisés et accessibles à tous. Notre aventure a commencé le 15 octobre 2025, avec un objectif clair : répondre aux besoins des utilisateurs, lutter contre l\'exploitation numérique et aider le plus grand nombre de personnes possible.',
+                aboutJourney: 'L\'idée a commencé avec des ressources modestes mais une grande vision, et a évolué sur le long terme avec un investissement de 5 000 $ pour créer une plateforme de confiance.',
+                teamHeader: 'Notre Équipe Fondatrice',
+                teamMember1Name: 'Chaib Mohamed Ramzi',
+                teamMember1Role: 'Propriétaire, Créateur de l\'Idée et Directeur Général',
+                teamMember1Desc: 'Un jeune de 20 ans originaire d\'Oum El Bouaghi, en Algérie. Il est l\'esprit créatif derrière Mega, agissant en tant que développeur d\'applications, ingénieur logiciel et programmeur backend pour le site.',
+                teamMember2Name: 'L.zero (Loris Zero)',
+                teamMember2Role: 'Ingénieur de Maintenance, Programmeur et Assistant',
+                teamMember2Desc: 'Un talentueux développeur et ingénieur logiciel de 23 ans originaire de Russie. Il joue un rôle essentiel dans le maintien de la stabilité et des performances de la plateforme. Loris préfère préserver sa vie privée et rester à l\'écart des projecteurs.',
+                contactHeader: 'Contactez-nous',
+                contactDesc: 'Vous avez des questions ou des suggestions ? Nous serions ravis de vous entendre ! Contactez-nous par e-mail :',
+            },
+            ru: {
+                pageTitle: 'О нас — Mega', backToHome: '→ На главную', langName: 'Русский', langFlag: '🇷🇺',
+                aboutHeader: 'О Mega',
+                aboutIntro: 'Добро пожаловать в Mega. Мы — небольшая и увлеченная команда из двух человек, которая верит, что мощные инструменты должны быть простыми, безопасными и доступными для всех. Наш путь начался 15 октября 2025 года с одной ясной целью: удовлетворять потребности пользователей, бороться с цифровой эксплуатацией и помогать как можно большему числу людей.',
+                aboutJourney: 'Идея началась со скромных ресурсов, но с великим видением, и развивалась в долгосрочной перспективе с инвестициями в 5000 долларов для создания платформы, которой вы можете доверять.',
+                teamHeader: 'Наша Команда Основателей',
+                teamMember1Name: 'Chaib Mohamed Ramzi',
+                teamMember1Role: 'Владелец, Автор Идеи и Генеральный Директор',
+                teamMember1Desc: '20-летний парень из Ум-эль-Буаги, Алжир. Он — творческий мозг Mega, работающий разработчиком приложений, инженером-программистом и бэкенд-программистом сайта.',
+                teamMember2Name: 'L.zero (Лорис Зеро)',
+                teamMember2Role: 'Инженер по техническому обслуживанию, Программист и Ассистент',
+                teamMember2Desc: 'Талантливый 23-летний разработчик и инженер-программист из России. Он играет жизненно важную роль в поддержании стабильности и производительности платформы. Лорис предпочитает сохранять свою конфиденциальность и оставаться в тени.',
+                contactHeader: 'Свяжитесь с нами',
+                contactDesc: 'Есть вопросы или предложения? Мы будем рады вас выслушать! Свяжитесь с нами по электронной почте:',
+            }
+        };
+
+        const selectedLangBtn = document.getElementById('selectedLang');
+        const langDropdown = document.getElementById('langDropdown');
+        const currentLangFlag = document.getElementById('currentLangFlag');
+        const currentLangText = document.getElementById('currentLangText');
+
+        function applyTranslation(lang) {
+            const t = translations[lang];
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.dataset.key;
+                if (t[key]) { el.innerHTML = t[key]; }
+            });
+            currentLangFlag.textContent = t.langFlag;
+            currentLangText.textContent = t.langName;
+        }
+
+        selectedLangBtn.addEventListener('click', () => langDropdown.classList.toggle('show'));
+        langDropdown.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = e.target.closest('.lang-option');
+            if (target) {
+                const newLang = target.dataset.lang;
+                if (newLang !== state.lang) {
+                    state.lang = newLang;
+                    applyTranslation(newLang);
+                }
+                langDropdown.classList.remove('show');
+            }
+        });
+        window.addEventListener('click', (e) => {
+            if (!e.target.closest('.language-switcher')) { langDropdown.classList.remove('show'); }
+        });
+
+        applyTranslation(state.lang);
+    </script>
+</body>
+</html>

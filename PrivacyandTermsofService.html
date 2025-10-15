@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="pageTitle">الخصوصية والشروط — Mega</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        :root {
+            --dark-bg: #121212; --secondary-bg: #1e1e1e; --text-color: #ffffff;
+            --text-muted: #a0a0a0; --primary-color: #007bff; --border-color: rgba(255, 255, 255, 0.1);
+        }
+        html:lang(en), html:lang(es), html:lang(fr), html:lang(ru) { direction: ltr; }
+        html:lang(en) body, html:lang(es) body, html:lang(fr) body, html:lang(ru) body { font-family: "Roboto", sans-serif; }
+        html:lang(ar) body { font-family: "Cairo", sans-serif; }
+        body { margin: 0; background-color: var(--dark-bg); color: var(--text-color); line-height: 1.8; }
+        .container { width: 90%; max-width: 800px; margin: 40px auto; padding: 20px; background-color: var(--secondary-bg); border-radius: 12px; border: 1px solid var(--border-color); }
+        h1, h2 { color: var(--text-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-top: 30px; }
+        h1 { text-align: center; font-size: 2.5em; }
+        p, li { color: var(--text-muted); font-size: 1.1em; }
+        .section-image { width: 100%; max-width: 400px; display: block; margin: 20px auto; border-radius: 12px; }
+        .pro-plan-highlight { color: #4dabf7; font-weight: 700; }
+        a { color: var(--primary-color); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        footer { text-align: center; margin-top: 40px; color: var(--text-muted); }
+        
+        /* Header and Language Switcher Styles */
+        .site-header { padding: 15px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
+        .site-header .container-header { width: 90%; max-width: 800px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .back-link { color: var(--text-color); font-weight: 700; text-decoration: none; font-size: 1.1em; }
+        .language-switcher { position: relative; display: inline-block; }
+        .selected-lang { background: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; transition: background 0.2s; display: flex; align-items: center; gap: 8px; font-family: inherit; }
+        .selected-lang:hover { background: rgba(255, 255, 255, 0.1); }
+        .selected-lang .fa-chevron-down { font-size: 12px; transition: transform 0.3s; }
+        .lang-dropdown { display: none; position: absolute; top: 110%; right: 0; background-color: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; min-width: 150px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); z-index: 100; overflow: hidden; }
+        .lang-dropdown.show { display: block; }
+        .lang-option { color: var(--text-muted); padding: 12px 16px; text-decoration: none; display: block; transition: background-color 0.2s, color 0.2s; font-size: 14px; font-weight: 600; }
+        .lang-option:hover { background-color: var(--primary-color); color: var(--text-color); }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container-header">
+            <a href="index.html" class="back-link" data-key="backToHome">→ العودة للرئيسية</a>
+            <div class="language-switcher">
+                <button class="selected-lang" id="selectedLang">
+                    <span id="currentLangFlag">🇸🇦</span>
+                    <span id="currentLangText">العربية</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <a href="#" class="lang-option" data-lang="ar">🇸🇦 العربية</a>
+                    <a href="#" class="lang-option" data-lang="en">🇬🇧 English</a>
+                    <a href="#" class="lang-option" data-lang="es">🇪🇸 Español</a>
+                    <a href="#" class="lang-option" data-lang="fr">🇫🇷 Français</a>
+                    <a href="#" class="lang-option" data-lang="ru">🇷🇺 Русский</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1 data-key="pageHeader">الخصوصية وشروط الخدمة</h1>
+        
+        <h2 data-key="privacyTitle">سياسة الخصوصية</h2>
+        <img src="https://i.ibb.co/0j95CCny/2cec52ef96cbad22d4b846d6503785c3.jpg" alt="Privacy Illustration" class="section-image">
+
+        <p data-key="privacyIntro">في Mega، خصوصية مستخدمينا هي أولويتنا القصوى. توضح هذه السياسة كيفية تعاملنا مع بياناتك لضمان حريتك وأمانك الكامل.</p>
+
+        <h3 data-key="privacyFilesTitle">1. التعامل مع الملفات والصور</h3>
+        <p data-key="privacyFilesDesc1">حرية وخصوصية مستخدمينا أساسية عند رفع أو مشاركة أو تحويل صورهم وملفاتهم. تتم جميع عمليات المعالجة محليًا على جهازك عبر مكتبة تشفير متقدمة. يتم نقل الصورة من جهازك إلى المكتبة، حيث يتم تحويلها وتشفيرها، ثم يتم تخزينها مؤقتًا في المتصفح (التخزين المؤقت أو التخزين المحلي). هذا النهج يهدف إلى:</p>
+        <ul>
+            <li data-key="privacyFilesPoint1"><strong>تعزيز الأمان:</strong> ملفاتك لا تترك جهازك أبدًا أو يتم تحميلها على سيرفراتنا.</li>
+            <li data-key="privacyFilesPoint2"><strong>توفير سلاسة في الأداء:</strong> تقليل الضغط على السيرفرات والواجهة الأمامية للموقع.</li>
+            <li data-key="privacyFilesPoint3"><strong>إبقاء الخدمة مجانية:</strong> هذا الأسلوب يقلل من تكاليف التشغيل، مما يسمح لنا بتقديم الخدمة مجانًا.</li>
+        </ul>
+
+        <h3 data-key="privacyLoginTitle">2. تسجيل الدخول عبر جوجل</h3>
+        <p data-key="privacyLoginDesc1">يتيح موقع Mega منفذًا واحدًا فقط لتسجيل الدخول وهو عبر حساب جوجل الخاص بك. تم اتخاذ هذا القرار بهدف حماية بياناتك، تعزيز الأمان، وتقليل الهجمات الإلكترونية والروبوتات، حيث أن العملية محمية بواسطة خدمة reCAPTCHA من جوجل.</p>
+        <p data-key="privacyLoginDesc2">عند موافقتك على بنود الخدمة وتسجيل الدخول، فإنك توافق على مشاركة المعلومات التالية معنا:</p>
+        <ul>
+            <li data-key="privacyLoginPoint1">عنوان بريدك الإلكتروني.</li>
+            <li data-key="privacyLoginPoint2">اسم حسابك على جوجل.</li>
+        </ul>
+        <p data-key="privacyLoginDesc3">نحن نستخدم هذه المعلومات لضمان عمل حسابك بشكل صحيح وسلس، ولإنشاء معرف فريد (بصمة فريدة) لك داخل قواعد بياناتنا.</p>
+
+        <h2 data-key="termsTitle">شروط الخدمة</h2>
+        <img src="https://i.ibb.co/0R8Ln4jZ/d77aff53ad151d414dc365d79aee5500.jpg" alt="Terms of Service Illustration" class="section-image">
+
+        <h3 data-key="termsPaymentTitle">1. الدفع والاشتراكات</h3>
+        <p data-key="termsPaymentDesc1">للاشتراك في خدمات Mega المدفوعة، يجب أن يكون لديك حساب جوجل مسجل في موقعنا. نقدم خطة اشتراك واحدة:</p>
+        <ul>
+            <li data-key="termsPaymentPoint1"><strong>خطة برو (<span class="pro-plan-highlight">Pro Plan</span>):</strong> تتيح لك هذه الخطة الوصول إلى ميزات متقدمة وحصرية تساعدك في أعمالك، بالإضافة إلى مزايا خاصة للأعضاء، وتجربة الميزات التجريبية قبل إطلاقها، والاستفادة من أحداث شهرية و "كريديت" مجاني. يمكنك تفقد تفاصيل الخطة والأسعار عبر زر "الترقية إلى Pro" في حسابك أو من خلال زيارة صفحة الخطط.</li>
+        </ul>
+
+        <h3 data-key="termsCancellationTitle">2. عملية الدفع والإلغاء</h3>
+        <p data-key="termsCancellationDesc1">عند شرائك للاشتراك، تصبح رسميًا من أعضاء Mega المميزين. اشتراكك الأول يمنحك وصولاً كاملاً لمدة شهر، بالإضافة إلى شهر إضافي مجاني.</p>
+        <p data-key="termsCancellationDesc2">يمكنك إلغاء اشتراكك في أي وقت من خلال لوحة التحكم "خطتي" في صفحة الرفع (Upload). سيظل اشتراكك فعالاً حتى نهاية المدة المدفوعة، ولن يتم خصم أي مبالغ منك تلقائيًا بعد ذلك.</p>
+
+        <h3 data-key="termsRefundTitle">3. سياسة استرداد الأموال</h3>
+        <p data-key="termsRefundDesc">نتفهم أن الأخطاء قد تحدث. إذا قمت بالاشتراك عن طريق الخطأ، أو قام طفلك بذلك، يتيح لك Mega فترة <strong>24 ساعة</strong> من وقت الشراء للتواصل مع فريق الدعم الفني لطلب استرداد المبلغ. بعد انقضاء هذه المدة، لن يكون استرداد الأموال ممكنًا، ويعتبر اشتراكك قد تم بمسؤوليتك الكاملة.</p>
+        
+        <h3 data-key="termsProhibitedTitle">4. الاستخدام المحظور</h3>
+        <ul>
+            <li data-key="termsProhibitedPoint1"><strong>استغلال الثغرات:</strong> أي محاولة لاستغلال ثغرات أمنية في الموقع ستؤدي إلى حظر حسابك فورًا، وقد تصل إلى إجراءات قانونية.</li>
+            <li data-key="termsProhibitedPoint2"><strong>الاستخدام التجاري غير المصرح به:</strong> استخدام اسم "Mega" أو أي من محتوياته بهدف جني المال أو الترويج لمصالح شخصية دون إذن كتابي يعرضك لمتابعة قضائية من طرفنا.</li>
+        </ul>
+
+        <h3 data-key="termsIpTitle">5. الملكية الفكرية والتعديلات</h3>
+        <p data-key="termsIpDesc1">موقع Mega وجميع محتوياته (الشعارات، النصوص، التصاميم، والبرمجيات) هي ملك حصري لشركة Mega. كمستخدم، يتوجب عليك قراءة هذه المستندات والموافقة عليها.</p>
+        <p data-key="termsIpDesc2">تحتفظ Mega بالحق في تعديل هذه الشروط في أي وقت. سيتم إعلام المستخدمين بأي تغييرات جوهرية عبر البريد الإلكتروني، الإشعارات داخل الموقع، أو وسائل التواصل الاجتماعي الخاصة بنا.</p>
+
+        <footer>
+            <p data-key="footerLastUpdated">آخر تحديث: 15 أكتوبر 2025</p>
+            <p data-key="footerCopyright">&copy; 2025 Mega — جميع الحقوق محفوظة</p>
+        </footer>
+    </div>
+
+    <script>
+        const state = { lang: 'ar' };
+
+        const translations = {
+            ar: {
+                pageTitle: 'الخصوصية والشروط — Mega', backToHome: '→ العودة للرئيسية', langName: 'العربية', langFlag: '🇸🇦',
+                pageHeader: 'الخصوصية وشروط الخدمة',
+                privacyTitle: 'سياسة الخصوصية',
+                privacyIntro: 'في Mega، خصوصية مستخدمينا هي أولويتنا القصوى. توضح هذه السياسة كيفية تعاملنا مع بياناتك لضمان حريتك وأمانك الكامل.',
+                privacyFilesTitle: '1. التعامل مع الملفات والصور',
+                privacyFilesDesc1: 'حرية وخصوصية مستخدمينا أساسية عند رفع أو مشاركة أو تحويل صورهم وملفاتهم. تتم جميع عمليات المعالجة محليًا على جهازك عبر مكتبة تشفير متقدمة. يتم نقل الصورة من جهازك إلى المكتبة، حيث يتم تحويلها وتشفيرها، ثم يتم تخزينها مؤقتًا في المتصفح (التخزين المؤقت أو التخزين المحلي). هذا النهج يهدف إلى:',
+                privacyFilesPoint1: '<strong>تعزيز الأمان:</strong> ملفاتك لا تترك جهازك أبدًا أو يتم تحميلها على سيرفراتنا.',
+                privacyFilesPoint2: '<strong>توفير سلاسة في الأداء:</strong> تقليل الضغط على السيرفرات والواجهة الأمامية للموقع.',
+                privacyFilesPoint3: '<strong>إبقاء الخدمة مجانية:</strong> هذا الأسلوب يقلل من تكاليف التشغيل، مما يسمح لنا بتقديم الخدمة مجانًا.',
+                privacyLoginTitle: '2. تسجيل الدخول عبر جوجل',
+                privacyLoginDesc1: 'يتيح موقع Mega منفذًا واحدًا فقط لتسجيل الدخول وهو عبر حساب جوجل الخاص بك. تم اتخاذ هذا القرار بهدف حماية بياناتك، تعزيز الأمان، وتقليل الهجمات الإلكترونية والروبوتات، حيث أن العملية محمية بواسطة خدمة reCAPTCHA من جوجل.',
+                privacyLoginDesc2: 'عند موافقتك على بنود الخدمة وتسجيل الدخول، فإنك توافق على مشاركة المعلومات التالية معنا:',
+                privacyLoginPoint1: 'عنوان بريدك الإلكتروني.',
+                privacyLoginPoint2: 'اسم حسابك على جوجل.',
+                privacyLoginDesc3: 'نحن نستخدم هذه المعلومات لضمان عمل حسابك بشكل صحيح وسلس، ولإنشاء معرف فريد (بصمة فريدة) لك داخل قواعد بياناتنا.',
+                termsTitle: 'شروط الخدمة',
+                termsPaymentTitle: '1. الدفع والاشتراكات',
+                termsPaymentDesc1: 'للاشتراك في خدمات Mega المدفوعة، يجب أن يكون لديك حساب جوجل مسجل في موقعنا. نقدم خطة اشتراك واحدة:',
+                termsPaymentPoint1: '<strong>خطة برو (<span class="pro-plan-highlight">Pro Plan</span>):</strong> تتيح لك هذه الخطة الوصول إلى ميزات متقدمة وحصرية تساعدك في أعمالك، بالإضافة إلى مزايا خاصة للأعضاء، وتجربة الميزات التجريبية قبل إطلاقها، والاستفادة من أحداث شهرية و "كريديت" مجاني. يمكنك تفقد تفاصيل الخطة والأسعار عبر زر "الترقية إلى Pro" في حسابك أو من خلال زيارة صفحة الخطط.',
+                termsCancellationTitle: '2. عملية الدفع والإلغاء',
+                termsCancellationDesc1: 'عند شرائك للاشتراك، تصبح رسميًا من أعضاء Mega المميزين. اشتراكك الأول يمنحك وصولاً كاملاً لمدة شهر، بالإضافة إلى شهر إضافي مجاني.',
+                termsCancellationDesc2: 'يمكنك إلغاء اشتراكك في أي وقت من خلال لوحة التحكم "خطتي" في صفحة الرفع (Upload). سيظل اشتراكك فعالاً حتى نهاية المدة المدفوعة، ولن يتم خصم أي مبالغ منك تلقائيًا بعد ذلك.',
+                termsRefundTitle: '3. سياسة استرداد الأموال',
+                termsRefundDesc: 'نتفهم أن الأخطاء قد تحدث. إذا قمت بالاشتراك عن طريق الخطأ، أو قام طفلك بذلك، يتيح لك Mega فترة <strong>24 ساعة</strong> من وقت الشراء للتواصل مع فريق الدعم الفني لطلب استرداد المبلغ. بعد انقضاء هذه المدة، لن يكون استرداد الأموال ممكنًا، ويعتبر اشتراكك قد تم بمسؤوليتك الكاملة.',
+                termsProhibitedTitle: '4. الاستخدام المحظور',
+                termsProhibitedPoint1: '<strong>استغلال الثغرات:</strong> أي محاولة لاستغلال ثغرات أمنية في الموقع ستؤدي إلى حظر حسابك فورًا، وقد تصل إلى إجراءات قانونية.',
+                termsProhibitedPoint2: '<strong>الاستخدام التجاري غير المصرح به:</strong> استخدام اسم "Mega" أو أي من محتوياته بهدف جني المال أو الترويج لمصالح شخصية دون إذن كتابي يعرضك لمتابعة قضائية من طرفنا.',
+                termsIpTitle: '5. الملكية الفكرية والتعديلات',
+                termsIpDesc1: 'موقع Mega وجميع محتوياته (الشعارات، النصوص، التصاميم، والبرمجيات) هي ملك حصري لشركة Mega. كمستخدم، يتوجب عليك قراءة هذه المستندات والموافقة عليها.',
+                termsIpDesc2: 'تحتفظ Mega بالحق في تعديل هذه الشروط في أي وقت. سيتم إعلام المستخدمين بأي تغييرات جوهرية عبر البريد الإلكتروني، الإشعارات داخل الموقع، أو وسائل التواصل الاجتماعي الخاصة بنا.',
+                footerLastUpdated: 'آخر تحديث: 15 أكتوبر 2025',
+                footerCopyright: '© 2025 Mega — جميع الحقوق محفوظة'
+            },
+            en: {
+                pageTitle: 'Privacy & Terms — Mega', backToHome: '→ Back to Home', langName: 'English', langFlag: '🇬🇧',
+                pageHeader: 'Privacy & Terms of Service',
+                privacyTitle: 'Privacy Policy',
+                privacyIntro: 'At Mega, the privacy of our users is our top priority. This policy explains how we handle your data to ensure your complete freedom and security.',
+                privacyFilesTitle: '1. Handling of Files and Images',
+                privacyFilesDesc1: 'The freedom and privacy of our users are essential when uploading, sharing, or converting their images and files. All processing operations are done locally on your device through an advanced encryption library. The image is transferred from your device to the library, where it is converted and encrypted, and then temporarily stored in the browser (cache or local storage). This approach aims to:',
+                privacyFilesPoint1: '<strong>Enhance Security:</strong> Your files never leave your device or get uploaded to our servers.',
+                privacyFilesPoint2: '<strong>Provide Smooth Performance:</strong> Reduce the load on our servers and the website\'s front-end.',
+                privacyFilesPoint3: '<strong>Keep the Service Free:</strong> This method reduces operational costs, allowing us to offer the service for free.',
+                privacyLoginTitle: '2. Sign-in via Google',
+                privacyLoginDesc1: 'Mega provides only one sign-in method: through your Google account. This decision was made to protect your data, enhance security, and reduce cyberattacks and bots, as the process is protected by Google\'s reCAPTCHA service.',
+                privacyLoginDesc2: 'By agreeing to the terms of service and signing in, you consent to sharing the following information with us:',
+                privacyLoginPoint1: 'Your email address.',
+                privacyLoginPoint2: 'Your Google account name.',
+                privacyLoginDesc3: 'We use this information to ensure your account functions correctly and smoothly, and to create a unique identifier (a unique fingerprint) for you within our databases.',
+                termsTitle: 'Terms of Service',
+                termsPaymentTitle: '1. Payment and Subscriptions',
+                termsPaymentDesc1: 'To subscribe to Mega\'s paid services, you must have a Google account registered on our site. We offer one subscription plan:',
+                termsPaymentPoint1: '<strong>Pro Plan (<span class="pro-plan-highlight">Pro Plan</span>):</strong> This plan gives you access to advanced and exclusive features to help you with your work, in addition to special member benefits, access to beta features, and monthly events and free credits. You can check the plan details and pricing via the "Upgrade to Pro" button in your account or by visiting the plans page.',
+                termsCancellationTitle: '2. Payment and Cancellation Process',
+                termsCancellationDesc1: 'When you purchase a subscription, you officially become a premium member of Mega. Your first subscription gives you full access for one month, plus an additional free month.',
+                termsCancellationDesc2: 'You can cancel your subscription at any time through the "My Plan" dashboard on the Upload page. Your subscription will remain active until the end of the paid period, and you will not be automatically charged thereafter.',
+                termsRefundTitle: '3. Refund Policy',
+                termsRefundDesc: 'We understand that mistakes can happen. If you subscribed by mistake, or if your child did, Mega allows a <strong>24-hour</strong> period from the time of purchase to contact our support team for a refund. After this period, a refund will not be possible, and your subscription is considered your full responsibility.',
+                termsProhibitedTitle: '4. Prohibited Use',
+                termsProhibitedPoint1: '<strong>Exploiting Vulnerabilities:</strong> Any attempt to exploit security vulnerabilities on the site will result in an immediate ban of your account and may lead to legal action.',
+                termsProhibitedPoint2: '<strong>Unauthorized Commercial Use:</strong> Using the "Mega" name or any of its content for financial gain or to promote personal interests without written permission will subject you to legal action from us.',
+                termsIpTitle: '5. Intellectual Property and Modifications',
+                termsIpDesc1: 'The Mega website and all its contents (logos, texts, designs, and software) are the exclusive property of Mega. As a user, you are required to read and agree to these documents.',
+                termsIpDesc2: 'Mega reserves the right to modify these terms at any time. Users will be notified of any substantial changes via email, on-site notifications, or our social media channels.',
+                footerLastUpdated: 'Last Updated: October 15, 2025',
+                footerCopyright: '© 2025 Mega — All Rights Reserved'
+            },
+            es: {
+                pageTitle: 'Privacidad y Términos — Mega', backToHome: '→ Volver al Inicio', langName: 'Español', langFlag: '🇪🇸',
+                pageHeader: 'Privacidad y Términos de Servicio',
+                privacyTitle: 'Política de Privacidad',
+                privacyIntro: 'En Mega, la privacidad de nuestros usuarios es nuestra máxima prioridad. Esta política explica cómo manejamos tus datos para garantizar tu total libertad y seguridad.',
+                privacyFilesTitle: '1. Manejo de Archivos e Imágenes',
+                privacyFilesDesc1: 'La libertad y privacidad de nuestros usuarios son fundamentales al subir, compartir o convertir sus imágenes y archivos. Todas las operaciones de procesamiento se realizan localmente en tu dispositivo a través de una biblioteca de cifrado avanzada. La imagen se transfiere de tu dispositivo a la biblioteca, donde se convierte y cifra, y luego se almacena temporalmente en el navegador (caché o almacenamiento local). Este enfoque tiene como objetivo:',
+                privacyFilesPoint1: '<strong>Mejorar la Seguridad:</strong> Tus archivos nunca salen de tu dispositivo ni se suben a nuestros servidores.',
+                privacyFilesPoint2: '<strong>Proporcionar un Rendimiento Fluido:</strong> Reducir la carga en nuestros servidores y en la interfaz del sitio web.',
+                privacyFilesPoint3: '<strong>Mantener el Servicio Gratuito:</strong> Este método reduce los costos operativos, lo que nos permite ofrecer el servicio de forma gratuita.',
+                privacyLoginTitle: '2. Inicio de Sesión a través de Google',
+                privacyLoginDesc1: 'Mega ofrece un único método de inicio de sesión: a través de tu cuenta de Google. Esta decisión se tomó para proteger tus datos, mejorar la seguridad y reducir los ciberataques y bots, ya que el proceso está protegido por el servicio reCAPTCHA de Google.',
+                privacyLoginDesc2: 'Al aceptar los términos de servicio e iniciar sesión, aceptas compartir la siguiente información con nosotros:',
+                privacyLoginPoint1: 'Tu dirección de correo electrónico.',
+                privacyLoginPoint2: 'El nombre de tu cuenta de Google.',
+                privacyLoginDesc3: 'Utilizamos esta información para garantizar que tu cuenta funcione correctamente y sin problemas, y para crear un identificador único (una huella digital única) para ti en nuestras bases de datos.',
+                termsTitle: 'Términos de Servicio',
+                termsPaymentTitle: '1. Pagos y Suscripciones',
+                termsPaymentDesc1: 'Para suscribirte a los servicios de pago de Mega, debes tener una cuenta de Google registrada en nuestro sitio. Ofrecemos un plan de suscripción:',
+                termsPaymentPoint1: '<strong>Plan Pro (<span class="pro-plan-highlight">Pro Plan</span>):</strong> Este plan te da acceso a funciones avanzadas y exclusivas para ayudarte en tu trabajo, además de beneficios especiales para miembros, acceso a funciones beta y eventos mensuales y créditos gratuitos. Puedes consultar los detalles y precios del plan a través del botón "Actualizar a Pro" en tu cuenta o visitando la página de planes.',
+                termsCancellationTitle: '2. Proceso de Pago y Cancelación',
+                termsCancellationDesc1: 'Al comprar una suscripción, te conviertes oficialmente en un miembro premium de Mega. Tu primera suscripción te da acceso completo durante un mes, más un mes adicional gratuito.',
+                termsCancellationDesc2: 'Puedes cancelar tu suscripción en cualquier momento a través del panel "Mi Plan" en la página de carga. Tu suscripción permanecerá activa hasta el final del período pagado y no se te cobrará automáticamente después.',
+                termsRefundTitle: '3. Política de Reembolso',
+                termsRefundDesc: 'Entendemos que pueden ocurrir errores. Si te suscribiste por error, o si lo hizo tu hijo, Mega permite un período de <strong>24 horas</strong> desde el momento de la compra para contactar a nuestro equipo de soporte y solicitar un reembolso. Después de este período, no será posible un reembolso y se considera que tu suscripción es tu total responsabilidad.',
+                termsProhibitedTitle: '4. Uso Prohibido',
+                termsProhibitedPoint1: '<strong>Explotación de Vulnerabilidades:</strong> Cualquier intento de explotar vulnerabilidades de seguridad en el sitio resultará en la prohibición inmediata de tu cuenta y puede dar lugar a acciones legales.',
+                termsProhibitedPoint2: '<strong>Uso Comercial no Autorizado:</strong> El uso del nombre "Mega" o de cualquiera de sus contenidos con fines de lucro o para promover intereses personales sin permiso por escrito te someterá a acciones legales por nuestra parte.',
+                termsIpTitle: '5. Propiedad Intelectual y Modificaciones',
+                termsIpDesc1: 'El sitio web de Mega y todos sus contenidos (logotipos, textos, diseños y software) son propiedad exclusiva de Mega. Como usuario, debes leer y aceptar estos documentos.',
+                termsIpDesc2: 'Mega se reserva el derecho de modificar estos términos en cualquier momento. Se notificará a los usuarios de cualquier cambio sustancial por correo electrónico, notificaciones en el sitio o nuestras redes sociales.',
+                footerLastUpdated: 'Última actualización: 15 de octubre de 2025',
+                footerCopyright: '© 2025 Mega — Todos los derechos reservados'
+            },
+            fr: {
+                pageTitle: 'Confidentialité et Conditions — Mega', backToHome: '→ Retour à l\'accueil', langName: 'Français', langFlag: '🇫🇷',
+                pageHeader: 'Confidentialité et Conditions d\'utilisation',
+                privacyTitle: 'Politique de Confidentialité',
+                privacyIntro: 'Chez Mega, la confidentialité de nos utilisateurs est notre priorité absolue. Cette politique explique comment nous traitons vos données pour garantir votre liberté et votre sécurité totales.',
+                privacyFilesTitle: '1. Traitement des Fichiers et des Images',
+                privacyFilesDesc1: 'La liberté et la confidentialité de nos utilisateurs sont essentielles lors du téléchargement, du partage ou de la conversion de leurs images et fichiers. Toutes les opérations de traitement sont effectuées localement sur votre appareil via une bibliothèque de chiffrement avancée. L\'image est transférée de votre appareil vers la bibliothèque, où elle est convertie et chiffrée, puis stockée temporairement dans le navigateur (cache ou stockage local). Cette approche vise à :',
+                privacyFilesPoint1: '<strong>Améliorer la Sécurité :</strong> Vos fichiers ne quittent jamais votre appareil et ne sont pas téléchargés sur nos serveurs.',
+                privacyFilesPoint2: '<strong>Assurer des Performances Fluides :</strong> Réduire la charge sur nos serveurs et l\'interface du site.',
+                privacyFilesPoint3: '<strong>Garder le Service Gratuit :</strong> Cette méthode réduit les coûts opérationnels, nous permettant d\'offrir le service gratuitement.',
+                privacyLoginTitle: '2. Connexion via Google',
+                privacyLoginDesc1: 'Mega ne propose qu\'une seule méthode de connexion : via votre compte Google. Cette décision a été prise pour protéger vos données, renforcer la sécurité et réduire les cyberattaques et les bots, car le processus est protégé par le service reCAPTCHA de Google.',
+                privacyLoginDesc2: 'En acceptant les conditions d\'utilisation et en vous connectant, vous consentez à partager les informations suivantes avec nous :',
+                privacyLoginPoint1: 'Votre adresse e-mail.',
+                privacyLoginPoint2: 'Le nom de votre compte Google.',
+                privacyLoginDesc3: 'Nous utilisons ces informations pour garantir le bon fonctionnement de votre compte et pour créer un identifiant unique (une empreinte unique) pour vous dans nos bases de données.',
+                termsTitle: 'Conditions d\'utilisation',
+                termsPaymentTitle: '1. Paiement et Abonnements',
+                termsPaymentDesc1: 'Pour vous abonner aux services payants de Mega, vous devez avoir un compte Google enregistré sur notre site. Nous proposons un plan d\'abonnement :',
+                termsPaymentPoint1: '<strong>Plan Pro (<span class="pro-plan-highlight">Pro Plan</span>):</strong> Ce plan vous donne accès à des fonctionnalités avancées et exclusives pour vous aider dans votre travail, ainsi qu\'à des avantages spéciaux pour les membres, un accès aux fonctionnalités bêta, des événements mensuels et des crédits gratuits. Vous pouvez consulter les détails et les tarifs du plan via le bouton "Passer à Pro" dans votre compte ou en visitant la page des plans.',
+                termsCancellationTitle: '2. Processus de Paiement et d\'Annulation',
+                termsCancellationDesc1: 'Lorsque vous achetez un abonnement, vous devenez officiellement un membre premium de Mega. Votre premier abonnement vous donne un accès complet pendant un mois, plus un mois supplémentaire gratuit.',
+                termsCancellationDesc2: 'Vous pouvez annuler votre abonnement à tout moment via le tableau de bord "Mon Plan" sur la page de téléchargement. Votre abonnement restera actif jusqu\'à la fin de la période payée, et vous ne serez pas facturé automatiquement par la suite.',
+                termsRefundTitle: '3. Politique de Remboursement',
+                termsRefundDesc: 'Nous comprenons que des erreurs peuvent se produire. Si vous vous êtes abonné par erreur, ou si votre enfant l\'a fait, Mega vous accorde une période de <strong>24 heures</strong> à compter de l\'achat pour contacter notre équipe de support pour un remboursement. Passé ce délai, aucun remboursement ne sera possible et votre abonnement est considéré comme votre entière responsabilité.',
+                termsProhibitedTitle: '4. Utilisation Interdite',
+                termsProhibitedPoint1: '<strong>Exploitation de Vulnérabilités :</strong> Toute tentative d\'exploiter les vulnérabilités de sécurité du site entraînera une interdiction immédiate de votre compte et pourra donner lieu à des poursuites judiciaires.',
+                termsProhibitedPoint2: '<strong>Utilisation Commerciale non Autorisée :</strong> L\'utilisation du nom "Mega" ou de l\'un de ses contenus à des fins lucratives ou pour promouvoir des intérêts personnels sans autorisation écrite vous exposera à des poursuites judiciaires de notre part.',
+                termsIpTitle: '5. Propriété Intellectuelle et Modifications',
+                termsIpDesc1: 'Le site web Mega et tout son contenu (logos, textes, designs et logiciels) sont la propriété exclusive de Mega. En tant qu\'utilisateur, vous devez lire et accepter ces documents.',
+                termsIpDesc2: 'Mega se réserve le droit de modifier ces conditions à tout moment. Les utilisateurs seront informés de tout changement substantiel par e-mail, notifications sur le site ou via nos réseaux sociaux.',
+                footerLastUpdated: 'Dernière mise à jour : 15 octobre 2025',
+                footerCopyright: '© 2025 Mega — Tous droits réservés'
+            },
+            ru: {
+                pageTitle: 'Конфиденциальность и Условия — Mega', backToHome: '→ На главную', langName: 'Русский', langFlag: '🇷🇺',
+                pageHeader: 'Конфиденциальность и Условия использования',
+                privacyTitle: 'Политика Конфиденциальности',
+                privacyIntro: 'В Mega конфиденциальность наших пользователей является нашим главным приоритетом. Эта политика объясняет, как мы обрабатываем ваши данные, чтобы обеспечить вашу полную свободу и безопасность.',
+                privacyFilesTitle: '1. Обработка Файлов и Изображений',
+                privacyFilesDesc1: 'Свобода и конфиденциальность наших пользователей необходимы при загрузке, обмене или преобразовании их изображений и файлов. Все операции обработки выполняются локально на вашем устройстве с помощью передовой библиотеки шифрования. Изображение передается с вашего устройства в библиотеку, где оно преобразуется и шифруется, а затем временно сохраняется в браузере (кэш или локальное хранилище). Этот подход направлен на:',
+                privacyFilesPoint1: '<strong>Повышение Безопасности:</strong> Ваши файлы никогда не покидают ваше устройство и не загружаются на наши серверы.',
+                privacyFilesPoint2: '<strong>Обеспечение Плавно Работы:</strong> Снижение нагрузки на наши серверы и интерфейс сайта.',
+                privacyFilesPoint3: '<strong>Сохранение Бесплатного Сервиса:</strong> Этот метод снижает операционные расходы, что позволяет нам предлагать услугу бесплатно.',
+                privacyLoginTitle: '2. Вход через Google',
+                privacyLoginDesc1: 'Mega предоставляет только один способ входа: через вашу учетную запись Google. Это решение было принято для защиты ваших данных, повышения безопасности и снижения кибератак и ботов, поскольку процесс защищен службой reCAPTCHA от Google.',
+                privacyLoginDesc2: 'Соглашаясь с условиями обслуживания и входя в систему, вы соглашаетесь поделиться с нами следующей информацией:',
+                privacyLoginPoint1: 'Ваш адрес электронной почты.',
+                privacyLoginPoint2: 'Имя вашей учетной записи Google.',
+                privacyLoginDesc3: 'Мы используем эту информацию для обеспечения правильной и бесперебойной работы вашей учетной записи, а также для создания уникального идентификатора (уникального отпечатка) для вас в наших базах данных.',
+                termsTitle: 'Условия использования',
+                termsPaymentTitle: '1. Оплата и Подписки',
+                termsPaymentDesc1: 'Чтобы подписаться на платные услуги Mega, у вас должна быть учетная запись Google, зарегистрированная на нашем сайте. Мы предлагаем один план подписки:',
+                termsPaymentPoint1: '<strong>План Pro (<span class="pro-plan-highlight">Pro Plan</span>):</strong> Этот план предоставляет вам доступ к расширенным и эксклюзивным функциям, которые помогут вам в работе, а также специальные преимущества для участников, доступ к бета-функциям, ежемесячные мероприятия и бесплатные кредиты. Вы можете проверить детали плана и цены с помощью кнопки "Перейти на Pro" в своей учетной записи или посетив страницу планов.',
+                termsCancellationTitle: '2. Процесс Оплаты и Отмены',
+                termsCancellationDesc1: 'При покупке подписки вы официально становитесь премиум-участником Mega. Ваша первая подписка дает вам полный доступ на один месяц плюс дополнительный бесплатный месяц.',
+                termsCancellationDesc2: 'Вы можете отменить подписку в любое время через панель "Мой план" на странице загрузки. Ваша подписка останется активной до конца оплаченного периода, и с вас не будут автоматически списываться средства после этого.',
+                termsRefundTitle: '3. Политика Возврата Средств',
+                termsRefundDesc: 'Мы понимаем, что могут случиться ошибки. Если вы подписались по ошибке или это сделал ваш ребенок, Mega предоставляет <strong>24-часовой</strong> период с момента покупки для обращения в нашу службу поддержки за возвратом средств. По истечении этого периода возврат средств будет невозможен, и ваша подписка будет считаться вашей полной ответственностью.',
+                termsProhibitedTitle: '4. Запрещенное Использование',
+                termsProhibitedPoint1: '<strong>Использование Уязвимостей:</strong> Любая попытка использования уязвимостей безопасности на сайте приведет к немедленной блокировке вашей учетной записи и может повлечь за собой судебные иски.',
+                termsProhibitedPoint2: '<strong>Несанкционированное Коммерческое Использование:</strong> Использование названия "Mega" или любого его контента для получения финансовой выгоды или продвижения личных интересов без письменного разрешения повлечет за собой судебные иски с нашей стороны.',
+                termsIpTitle: '5. Интеллектуальная Собственность и Изменения',
+                termsIpDesc1: 'Веб-сайт Mega и все его содержимое (логотипы, тексты, дизайн и программное обеспечение) являются исключительной собственностью Mega. Как пользователь, вы обязаны прочитать и согласиться с этими документами.',
+                termsIpDesc2: 'Mega оставляет за собой право изменять эти условия в любое время. Пользователи будут уведомлены о любых существенных изменениях по электронной почте, через уведомления на сайте или через наши социальные сети.',
+                footerLastUpdated: 'Последнее обновление: 15 октября 2025 г.',
+                footerCopyright: '© 2025 Mega — Все права защищены'
+            }
+        };
+
+        const selectedLangBtn = document.getElementById('selectedLang');
+        const langDropdown = document.getElementById('langDropdown');
+        const currentLangFlag = document.getElementById('currentLangFlag');
+        const currentLangText = document.getElementById('currentLangText');
+
+        function applyTranslation(lang) {
+            const t = translations[lang];
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.dataset.key;
+                if (t[key]) {
+                    // Use innerHTML to render bold tags correctly
+                    el.innerHTML = t[key];
+                }
+            });
+            
+            currentLangFlag.textContent = t.langFlag;
+            currentLangText.textContent = t.langName;
+        }
+
+        selectedLangBtn.addEventListener('click', () => {
+            langDropdown.classList.toggle('show');
+        });
+
+        langDropdown.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = e.target.closest('.lang-option');
+            if (target) {
+                const newLang = target.dataset.lang;
+                if (newLang !== state.lang) {
+                    state.lang = newLang;
+                    applyTranslation(newLang);
+                }
+                langDropdown.classList.remove('show');
+            }
+        });
+
+        window.addEventListener('click', (e) => {
+            if (!e.target.closest('.language-switcher')) {
+                langDropdown.classList.remove('show');
+            }
+        });
+
+        applyTranslation(state.lang);
+    </script>
+
+</body>
+</html>

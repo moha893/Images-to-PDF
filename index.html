@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Mega — محول الصور الفوري والمجاني | Free & Instant Image Converter</title>
+    <meta name="description" content="Mega هو محول صور مجاني 100%، يعمل بلا حدود وبدون إعلانات مزعجة. حوّل صورك إلى PDF، JPG، PNG وغيرها بسهولة وأمان.">
+    
+    <meta name="keywords" lang="ar" content="محول صور, تحويل صور, تحويل الصور مجانا, محول صور اونلاين, تغيير صيغة الصور, jpg, png, pdf, webp, محول صور مجاني, أداة تحويل الصور, موقع تحويل صور, بدون إعلانات, بلا حدود"/>
+    <meta name="keywords" lang="en" content="image converter, convert images, free image converter, online image converter, change image format, jpg, png, pdf, webp, ad-free image converter, unlimited converter, image tool"/>
+    <meta name="keywords" lang="es" content="conversor de imágenes, convertir imágenes gratis, cambiar formato de imagen, conversor de fotos online, sin anuncios, ilimitado"/>
+    <meta name="keywords" lang="fr" content="convertisseur d'image, convertir des images gratuitement, changer le format d'image, convertisseur en ligne, sans publicité, illimité"/>
+    <meta name="keywords" lang="ru" content="конвертер изображений, конвертировать изображения бесплатно, изменить формат изображения, онлайн-конвертер, без рекламы, без ограничений"/>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        /* Basic Setup */
+        :root {
+            --primary-color: #007bff;
+            --primary-hover: #0056b3;
+            --dark-bg: #121212;
+            --secondary-bg: #1e1e1e;
+            --card-bg: #2a2a2a;
+            --text-color: #ffffff;
+            --text-muted: #a0a0a0;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* التبديل لنمط اللغة الإنجليزية */
+        html:lang(en) {
+            direction: ltr;
+        }
+        html:lang(en) body {
+            font-family: "Roboto", sans-serif;
+        }
+        html:lang(ar) body {
+            font-family: "Cairo", sans-serif;
+        }
+        
+        body {
+            margin: 0;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .site-header {
+            background-color: var(--secondary-bg);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .site-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-right-panel {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* يمكنك تغيير هذا الرقم أيضًا */
+    flex-wrap: wrap; /* <-- أضف هذا السطر */
+    justify-content: flex-end; /* <-- وأضف هذا السطر */
+}
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 45px;
+            height: 45px;
+            margin-inline-end: 12px;
+        }
+
+        .site-name {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .main-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    margin: 0 8px;
+    font-weight: 700;
+    transition: color 0.3s;
+    font-size: 15px;
+    white-space: nowrap; /* <-- أضف هذا السطر المهم جدًا */
+}
+
+        .main-nav a:hover {
+            color: var(--text-color);
+        }
+        
+        .lang-toggle {
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .lang-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(180deg, var(--dark-bg), #000000);
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+        }
+
+        /* Features Section */
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .feature-item {
+            background: var(--secondary-bg);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .feature-item .icon {
+            font-size: 36px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .feature-item h3 {
+            margin-top: 0;
+        }
+        
+        .feature-item p {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 10px;
+            transition: background-color 0.3s, transform 0.2s;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Login Section */
+        .login-section {
+            background-color: var(--dark-bg);
+            padding: 60px 0;
+        }
+
+        .login-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .login-content {
+            flex-grow: 1;
+        }
+
+        .google-login-button {
+            background-color: #ffffff;
+            color: #444;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+        }
+
+        .google-login-button:hover {
+            background-color: #f5f5f5;
+        }
+
+        .google-login-button img {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Footer */
+        .site-footer-bottom {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        /* ===== التعديل هنا ===== */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 36px;
+            }
+            /* تم حذف سطر "display: none;" من هنا للسماح بظهور الروابط */
+        }
+        /* تعديل إضافي لتحسين المظهر على الشاشات الصغيرة جدًا */
+        @media (max-width: 420px) {
+            .site-name {
+                display: none; /* إخفاء اسم الموقع لإعطاء مساحة للروابط */
+            }
+        }
+/* From Uiverse.io by ilkhoeri */ 
+.card {
+ padding: 1rem;
+ overflow: hidden;
+ border: 1px solid #c5c5c5;
+ border-radius: 12px;
+ background-color: #d9d9d92f;
+ backdrop-filter: blur(8px);
+ min-width: 280px;
+ /* أضفت هذا السطر ليظهر في المنتصف */
+ margin: 30px auto; 
+}
+.wrap {
+ display: flex;
+ flex-direction: column;
+ gap: 1rem;
+ position: relative;
+ z-index: 10;
+ border: 0.5px solid #525252;
+ border-radius: 8px;
+ overflow: hidden;
+}
+.terminal {
+ display: flex;
+ flex-direction: column;
+
+ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+   "Liberation Mono", "Courier New", monospace;
+}
+.head {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ overflow: hidden;
+ min-height: 40px;
+ padding-inline: 12px;
+ border-top-left-radius: 8px;
+ border-top-right-radius: 8px;
+ background-color: #202425;
+}
+.title {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ height: 2.5rem;
+ user-select: none;
+ font-weight: 600;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ white-space: nowrap;
+ color: #8e8e8e;
+}
+.title > svg {
+ height: 18px;
+ width: 18px;
+ margin-top: 2px;
+ color: #006adc;
+}
+.copy_toggle {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ padding: 0.25rem;
+ border: 0.65px solid #c1c2c5;
+ margin-left: auto;
+ border-radius: 6px;
+ background-color: #202425;
+ color: #8e8e8e;
+ cursor: pointer;
+}
+.copy_toggle > svg {
+ width: 20px;
+ height: 20px;
+}
+.copy_toggle:active > svg > path,
+.copy_toggle:focus-within > svg > path {
+ animation: clipboard-check 500ms linear forwards;
+}
+.body {
+ display: flex;
+ flex-direction: column;
+ position: relative;
+ border-bottom-right-radius: 8px;
+ border-bottom-left-radius: 8px;
+ overflow-x: auto;
+ padding: 1rem;
+ line-height: 19px;
+ color: white;
+ background-color: black;
+ white-space: nowrap;
+}
+.pre {
+ display: flex;
+ flex-direction: row;
+ align-items: center;
+ text-wrap: nowrap;
+ white-space: pre;
+ background-color: transparent;
+ overflow: hidden;
+ box-sizing: border-box;
+ font-size: 16px;
+}
+.pre code:nth-child(1) {
+ color: #575757;
+}
+.pre code:nth-child(2) {
+ color: #e34ba9;
+}
+.cmd {
+ height: 19px;
+ position: relative;
+ display: flex;
+ align-items: center;
+ flex-direction: row;
+}
+.cmd::before {
+ content: attr(data-cmd);
+ position: relative;
+ display: block;
+ white-space: nowrap;
+ overflow: hidden;
+ background-color: transparent;
+ animation: inputs 8s steps(22) infinite;
+}
+.cmd::after {
+ content: "";
+ position: relative;
+ display: block;
+ height: 100%;
+ overflow: hidden;
+ background-color: transparent;
+ border-right: 0.15em solid #e34ba9;
+ animation: cursor 0.5s step-end infinite alternate, blinking 0.5s infinite;
+}
+
+@keyframes blinking {
+ 20%,
+ 80% {
+   transform: scaleY(1);
+ }
+ 50% {
+   transform: scaleY(0);
+ }
+}
+@keyframes cursor {
+ 50% {
+   border-right-color: transparent;
+ }
+}
+@keyframes inputs {
+ 0%,
+ 100% {
+   width: 0;
+ }
+ 10%,
+ 90% {
+   width: 58px;
+ }
+ 30%,
+ 70% {
+   width: 215px;
+   max-width: max-content;
+ }
+}
+@keyframes clipboard-check {
+ 100% {
+   color: #fff;
+   d: path(
+     "M 9 5 H 7 a 2 2 0 0 0 -2 2 v 12 a 2 2 0 0 0 2 2 h 10 a 2 2 0 0 0 2 -2 V 7 a 2 2 0 0 0 -2 -2 h -2 M 9 5 a 2 2 0 0 0 2 2 h 2 a 2 2 0 0 0 2 -2 M 9 5 a 2 2 0 0 1 2 -2 h 2 a 2 2 0 0 1 2 2 m -6 9 l 2 2 l 4 -4"
+   );
+ }
+}
+/* كود للتحكم في الصورة المتحركة */
+
+.custom-gif {
+
+  display: block; /* لجعلها قابلة للتوسيط */
+
+  margin: 20px auto; /* لإضافة مسافة وتوسيط الصورة أفقيًا */
+
+  max-width: 90%; /* العرض الأقصى ليكون 90% من الشاشة */
+
+  width: 280px; /* يمكنك تغيير هذا الرقم للتحكم في الحجم */
+
+  border-radius: 12px; /* لجعل الحواف دائرية مثل باقي التصميم */
+
+}
+/* Styling for the new static image */
+.custom-image {
+  display: block;
+  margin: 20px auto; 
+  max-width: 90%;
+  width: 280px; /* You can change this number */
+  border-radius: 12px;
+  border: 1px solid var(--border-color); /* Added a border to match the design */
+}
+.pdf-icon {
+    width: 35px; /* حجم الأيقونة */
+    height: 45px;
+}
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="logo-area">
+                <img src="https://i.ibb.co/cKDWYpLm/Mega-Picsart-25-10-15-13-30-25-345.webp" alt="Mega Logo" class="logo">
+                <span class="site-name">Mega</span>
+            </div>
+            <div class="header-right-panel">
+                <nav class="main-nav">
+                    <a href="about.html" data-key="navAbout">من نحن</a>
+                    <a href="PrivacyandTermsofService.html" data-key="navPrivacy">الخصوصية والشروط</a>
+                </nav>
+                <button class="lang-toggle" id="langToggle">
+                  <span id="langFlag">🇬🇧</span> <span id="langText">English</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="hero">
+    <div class="container text-center">
+        <h1 class="hero-title" data-key="heroTitle">محول الصور الأسرع، المجاني، والآمن</h1>
+        <p class="hero-subtitle" data-key="heroSubtitle">حوّل صورك إلى أي صيغة تريدها مباشرة من متصفحك. خصوصيتك هي أولويتنا.</p>
+        
+        <div class="pdf-feature">
+            <img src="https://i.ibb.co/W4Tx7Rhw/Mrgapdf-Picsart-25-10-15-15-44-36-587.webp" alt="PDF Icon" class="pdf-icon">
+            <span class="pdf-feature-text" data-key="heroPdfFeature">تحويل الصور الى pdf بسهولة</span>
+        </div>
+        <div class="card">
+        ...
+  <div class="wrap">
+    <div class="terminal">
+      <hgroup class="head">
+        <p class="title">
+          <svg
+            width="16px"
+            height="16px"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-width="2"
+            stroke="currentColor"
+            fill="none"
+          >
+            <path
+              d="M7 15L10 12L7 9M13 15H17M7.8 21H16.2C17.8802 21 18.7202 21 19.362 20.673C19.9265 20.3854 20.3854 19.9265 20.673 19.362C21 18.7202 21 17.8802 21 16.2V7.8C21 6.11984 21 5.27976 20.673 4.63803C20.3854 4.07354 19.9265 3.6146 19.362 3.32698C18.7202 3 17.8802 3 16.2 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21Z"
+            ></path>
+          </svg>
+          Terminal
+        </p>
+
+        <button class="copy_toggle" tabindex="-1" type="button">
+          <svg
+            width="16px"
+            height="16px"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-width="2"
+            stroke="currentColor"
+            fill="none"
+          >
+            <path
+              d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"
+            ></path>
+            <path
+              d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"
+            ></path>
+          </svg>
+        </button>
+      </hgroup>
+
+      <div class="body">
+        <pre class="pre">         <code>-&nbsp;</code>
+          <code>npx&nbsp;</code>
+          <code class="cmd" data-cmd="create-react-app@latest"></code>
+        </pre>
+      </div>
+    </div>
+  </div>
+</div>
+<img src="https://i.ibb.co/5h7dGy2r/de62f69f5ddf1baf711a1e5dc4552cbf.gif" alt="Coding GIF" class="custom-gif">
+<img src="https://i.ibb.co/YwQYzFn/Mega-Picsart-25-10-15-15-44-16-347.webp" alt="Feature Comparison" class="custom-image">
+            <div class="features">
+                <div class="feature-item">
+                    <i class="fas fa-shield-halved icon"></i>
+                    <h3 data-key="feature1Title">بدون إعلانات</h3>
+                    <p data-key="feature1Desc">تجربة نظيفة ومركزة بدون أي إعلانات مزعجة.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-infinity icon"></i>
+                    <h3 data-key="feature2Title">بلا حدود للاستخدام</h3>
+                    <p data-key="feature2Desc">حوّل أي عدد من الصور، في أي وقت، وبأي حجم.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-gift icon"></i>
+                    <h3 data-key="feature3Title">مجاني تمامًا 100%</h3>
+                    <p data-key="feature3Desc">كل الميزات متاحة لك مجانًا، اليوم ودائمًا.</p>
+                </div>
+            </div>
+
+            <a href="upload.html" class="cta-button" data-key="ctaButton">أبدأ مجاناً الآن</a>
+        </div>
+    </main>
+
+    <section class="login-section">
+        <div class="container">
+            <div class="login-box">
+                <div class="login-content">
+                    <h2 data-key="loginTitle">هل تريد المزيد؟</h2>
+                    <p data-key="loginDesc">سجل دخولك للحصول على مزيد من الإضافات المميزة قريبًا.</p>
+                </div>
+                <div class="login-action">
+                    <button class="google-login-button">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google G Logo">
+                        <span data-key="loginButton">تسجيل الدخول عبر جوجل</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer-bottom">
+        <p data-key="footer">&copy; 2025 Mega — جميع الحقوق محفوظة</p>
+    </footer>
+
+    <script>
+        const state = {
+            lang: 'ar'
+        };
+
+        const translations = {
+            ar: {
+                navAbout: 'من نحن',
+                navPrivacy: 'الخصوصية والشروط',
+                langFlag: '🇬🇧',
+                langText: 'English',
+                heroTitle: 'محول الصور الأسرع، المجاني، والآمن',
+                heroSubtitle: 'حوّل صورك إلى أي صيغة تريدها مباشرة من متصفحك. خصوصيتك هي أولويتنا.',
+                heroPdfFeature: 'تحويل الصور الى pdf بسهولة', // <-- تم تصحيح النص هنا
+                feature1Title: 'بدون إعلانات',
+                feature1Desc: 'تجربة نظيفة ومركزة بدون أي إعلانات مزعجة.',
+                feature2Title: 'بلا حدود للاستخدام',
+                feature2Desc: 'حوّل أي عدد من الصور، في أي وقت، وبأي حجم.',
+                feature3Title: 'مجاني تمامًا 100%',
+                feature3Desc: 'كل الميزات متاحة لك مجانًا، اليوم ودائمًا.',
+                ctaButton: 'أبدأ مجاناً الآن',
+                loginTitle: 'هل تريد المزيد؟',
+                loginDesc: 'سجل دخولك للحصول على مزيد من الإضافات المميزة قريبًا.',
+                loginButton: 'تسجيل الدخول عبر جوجل',
+                footer: '© 2025 Mega — جميع الحقوق محفوظة'
+            },
+            en: {
+                navAbout: 'About Us',
+                navPrivacy: 'Privacy & Terms',
+                langFlag: '🇸🇦',
+                langText: 'العربية',
+                heroTitle: 'The Fastest, Free, and Secure Image Converter',
+                heroSubtitle: 'Convert your images to any format you want, right from your browser. Your privacy is our priority.',
+                heroPdfFeature: 'Convert images to PDF easily',
+                feature1Title: 'Ad-Free',
+                feature1Desc: 'A clean and focused experience without any annoying ads.',
+                feature2Title: 'Unlimited Use',
+                feature2Desc: 'Convert any number of images, anytime, at any size.',
+                feature3Title: '100% Completely Free',
+                feature3Desc: 'All features are available to you for free, today and always.',
+                ctaButton: 'Get Started for Free',
+                loginTitle: 'Want More?',
+                loginDesc: 'Log in to get more premium features coming soon.',
+                loginButton: 'Sign in with Google',
+                footer: '© 2025 Mega — All Rights Reserved', // <-- تمت إضافة الفاصلة المفقودة هنا
+            }
+        };
+
+        function applyTranslation(lang) {
+            const t = translations[lang];
+            
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.dataset.key;
+                if (t[key]) {
+                    el.textContent = t[key];
+                }
+            });
+            
+            document.getElementById('langFlag').textContent = t.langFlag;
+            document.getElementById('langText').textContent = t.langText;
+        }
+
+        document.getElementById('langToggle').addEventListener('click', () => {
+            state.lang = state.lang === 'ar' ? 'en' : 'ar';
+            applyTranslation(state.lang);
+        });
+
+        applyTranslation(state.lang);
+    </script>
+    
+</body>
+</html>
