@@ -1,219 +1,49 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>تسجيل الدخول - Mega</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg-color:#000000;
-    --card-color:#1a1a1a; 
-    --text-color:#ffffff;
-    --muted-color:#aaaaaa; 
-    --success-color:#10b981; 
-    --danger-color:#fb7185;
-    --border-color: rgba(255,255,255,0.1);
-  }
-  body {
-    font-family: 'Cairo', sans-serif; 
-    margin: 0;
-    background-color: var(--bg-color);
-    color: var(--muted-color); 
-    display: flex; 
-    justify-content: center;
-    align-items: center; 
-    min-height: 100vh;
-  }
-  .login-container {
-    width: 90%; 
-    max-width: 400px; 
-    background: var(--card-color);
-    padding: 30px; 
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.5); 
-    display: flex;
-    flex-direction: column; 
-    gap: 20px;
-  }
-  h2 {
-    text-align: center; 
-    color: var(--text-color); 
-    margin: 0 0 10px 0; 
-    font-weight: 700;
-  }
-  .google-btn {
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    gap: 12px;
-    background: var(--text-color); 
-    color: var(--bg-color);
-    padding: 12px;
-    border-radius: 8px; 
-    font-weight: 700; 
-    cursor: pointer; 
-    font-size: 16px;
-    border: none; 
-    transition: background 0.2s, opacity 0.2s;
-  }
-  .google-btn:hover { background: var(--muted-color); }
-  /* تم تعديل هذا الجزء ليصبح الزر معتمًا فقط عندما يكون غير نشط */
-  .google-btn:disabled { 
-    background: #555; 
-    cursor: not-allowed; 
-    opacity: 0.7;
-  }
-  .google-btn img { width: 20px; height: 20px; }
-  .terms {
-    display: flex; 
-    align-items: flex-start;
-    gap: 10px; 
-    font-size: 14px;
-  }
-  .terms a { 
-    color: var(--success-color); 
-    text-decoration: none; 
-    font-weight: 600;
-  }
-  .terms input { margin-top: 4px; accent-color: var(--success-color); }
-  .status-note { font-size: 14px; text-align: center; min-height: 20px; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة تسجيل الدخول - Firebase & Vercel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+        }
+        #login-btn, #logout-btn {
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        #logout-btn {
+            background-color: #DB4437; /* لون الخروج */
+            display: none; /* مخفي في البداية */
+        }
+        #login-btn {
+            display: block; /* ظاهر في البداية */
+            margin: 20px auto;
+        }
+        #user-status {
+            margin-top: 30px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-  <div class="login-container">
-    <h2>تسجيل الدخول أو إنشاء حساب</h2>
-    <button class="google-btn" id="loginBtn" disabled>
-      <img src="https://i.ibb.co/TqWpJLw9/1.png" alt="Google Icon">
-      <span>المتابعة باستخدام جوجل</span>
-    </button>
-    <div class="terms">
-      <input type="checkbox" id="termsCheckbox" required>
-      <label for="termsCheckbox">
-        أوافق على <a href="PrivacyandTermsofService.html" target="_blank">شروط الخدمة والخصوصية</a> 
-      </label>
-    </div>
-    <div id="authStatus" class="status-note" style="color:var(--danger-color);"></div>
-  </div>
+    <h1>مرحباً بك في صفحة تسجيل الدخول</h1>
 
-  <script type="module">
-    // استيراد الدوال اللازمة من Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-    // ///////////////////////////////////////////////////////////////////////////
-    // ⚠️ تنبيه: يجب استبدال هذه القيم بقيمك الحقيقية من Firebase!
-    // ///////////////////////////////////////////////////////////////////////////
+    <button id="login-btn">تسجيل الدخول باستخدام Google 🚀</button>
+    <button id="logout-btn">تسجيل الخروج</button>
     
-    <script type="module">
-    // استيراد الدوال اللازمة من Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    <div id="user-status">الرجاء تسجيل الدخول...</div>
 
-    // ///////////////////////////////////////////////////////////////////////////
-    // ✅ استعادة استخدام متغيرات البيئة
-    // ⚠️ ملاحظة: يجب أن يبدأ اسم المتغير بـ VITE_ لكي يتم حقنه في كود الواجهة الأمامية
-    // ///////////////////////////////////////////////////////////////////////////
-    
-    const firebaseConfig = {
-      // نستخدم المتغيرات البيئية الآن
-      apiKey: import.meta.env.VITE_FIREBASE_API_KEY, // تم التعديل إلى الصيغة القياسية في Vite
-      authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-      databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
-      projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-      storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-      appId: import.meta.env.VITE_FIREBASE_APP_ID,
-    };
-    // ///////////////////////////////////////////////////////////////////////////
-
-    // تهيئة Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    // ... بقية الكود هنا ...
-    // ... (تأكد من إزالة جميع أكواد reCAPTCHA كما طلبنا سابقاً) ...
-    // ...
-    // ... المنطق الخاص بـ termsCheckbox و signInWithPopup ...
-
-    // تهيئة Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getDatabase(app); 
-    const provider = new GoogleAuthProvider();
-    provider.addScope('profile');
-    provider.addScope('email');
-
-    const loginBtn = document.getElementById('loginBtn');
-    const termsCheckbox = document.getElementById('termsCheckbox');
-    const authStatus = document.getElementById('authStatus');
-
-    // ⛔️ تم حذف جميع متغيرات ودوال reCAPTCHA ⛔️
-
-    // تمكين الزر فقط عند الموافقة على الشروط
-    termsCheckbox.addEventListener('change', () => {
-      // المنطق مبسط الآن: الزر ممكن إذا كان مربع الشروط محددًا (Checked)
-      loginBtn.disabled = !termsCheckbox.checked;
-    });
-
-    async function writeUserData(user) { 
-      const userRef = ref(db, 'users/' + user.uid); 
-      const snapshot = await get(userRef); 
-      const now = new Date().toISOString(); 
-
-      if (!snapshot.exists()) { 
-        // مستخدم جديد: احفظ البيانات الافتراضية
-        await set(userRef, {
-          email: user.email,
-          name: user.displayName,
-          photoURL: user.photoURL,
-          plan: 'free',
-          crystals: 20,
-          createdAt: now,
-          lastLogin: now,
-        });
-        console.log("New user data saved.");
-      } else {
-        // مستخدم موجود: حدث وقت آخر تسجيل دخول فقط
-        await set(ref(db, `users/${user.uid}/lastLogin`), now);
-        console.log("Existing user logged in."); 
-      }
-    }
-
-    loginBtn.addEventListener('click', async () => {
-      // فحص أخير قبل محاولة تسجيل الدخول
-      if (!termsCheckbox.checked) {
-        authStatus.style.color = 'var(--danger-color)';
-        authStatus.textContent = '⚠️ يجب الموافقة على شروط الخدمة والخصوصية.';
-        return;
-      }
-      
-      // ⛔️ تم حذف فحص recaptchaToken ⛔️
-
-      try {
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user; 
-        
-        await writeUserData(user);
-
-        // حفظ بيانات المستخدم في التخزين المحلي (Local Storage)
-        localStorage.setItem('mega_user_uid', user.uid);
-        
-        authStatus.style.color = 'var(--success-color)';
-        authStatus.textContent = '✅ تم تسجيل الدخول بنجاح! جاري التوجيه...';
-
-        // توجيه المستخدم إلى الصفحة الرئيسية أو صفحة الرفع
-        setTimeout(() => {
-          window.location.href = 'upload.html';
-        }, 1500);
-      } catch (error) {
-        authStatus.style.color = 'var(--danger-color)';
-        authStatus.textContent = `❌ فشل تسجيل الدخول: ${error.message}`;
-        console.error("Firebase Auth Error:", error);
-      }
-    });
-  </script>
-  </body>
+    <script type="module" src="./firebase-config.js"></script>
+    <script type="module" src="./login.js"></script>
+</body>
 </html>
