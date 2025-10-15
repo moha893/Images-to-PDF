@@ -9,30 +9,30 @@
 
 <style>
   :root{
-    --bg1:#111111; --bg2:#000000; --card:#1a1a1a; --accent:#ffffff;
-    --muted:#aaaaaa; --glass: rgba(255,255,255,0.05); --success:#10b981;
-    --danger:#fb7185; --border: rgba(255,255,255,0.1); --hover-bg: rgba(255,255,255,0.08);
+    --bg2:#000000; --card:#1a1a1a; --accent:#ffffff;
+    --muted:#aaaaaa; --success:#10b981;
+    --danger:#fb7185; --border: rgba(255,255,255,0.1);
     --primary-font: 'Cairo', sans-serif;
   }
   body {
     margin: 0; padding: 0; background-color: var(--bg2); color: var(--muted);
-    font-family: var(--primary-font); display: flex; justify-content: center; align-items: center;
+    font-family: var(--primary-font); display: flex;
+    justify-content: center; align-items: center;
     min-height: 100vh;
-  }
-  .app {
-    width: 100%; display: flex; justify-content: center; align-items: center;
   }
   .login-container {
     max-width: 400px; width: 90%; background: var(--card); padding: 30px;
-    border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    display: flex; flex-direction: column; gap: 20px; 
+    border-radius: 12px;
+    border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    display: flex; flex-direction: column; gap: 20px;
   }
   .login-container h2 {
     text-align: center; color: var(--accent); margin-bottom: 10px; font-weight: 700;
   }
   .google-login-btn {
     display: flex; align-items: center; justify-content: center; gap: 10px;
-    background: var(--accent); color: var(--bg2); padding: 12px 20px;
+    background: var(--accent); color: var(--bg2);
+    padding: 12px 20px;
     border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 16px;
     border: 1px solid var(--border); transition: background 0.2s, opacity 0.2s;
     width: 100%; text-decoration: none;
@@ -41,13 +41,21 @@
   .google-login-btn:disabled { background: #555; cursor: not-allowed; opacity: 0.7; }
   .google-icon { width: 20px; height: 20px; }
   .terms-checkbox {
-    display: flex; align-items: flex-start; gap: 10px; font-size: 13px;
+    display: flex; align-items: flex-start;
+    gap: 10px; font-size: 13px;
   }
   .terms-checkbox a { color: var(--success); text-decoration: none; font-weight: 600; }
   .terms-checkbox input[type="checkbox"] {
     margin-top: 3px; width: 18px; height: 18px; accent-color: var(--success);
   }
   .note { font-size: 14px; margin-top: 10px; text-align: center; }
+  
+  /* Styling for the reCAPTCHA container */
+  #recaptcha-container {
+    margin: 0 auto; /* Center the widget */
+    transform: scale(0.95); /* Slightly scale down to fit better */
+    transform-origin: center;
+  }
 </style>
 </head>
 <body>
@@ -63,9 +71,11 @@
       <div class="terms-checkbox">
         <input type="checkbox" id="termsCheckbox" required>
         <label for="termsCheckbox">
-          أوافق على <a href="PrivacyandTermsofService.html" target="_blank">شروط الخدمة والخصوصية</a>
+          [cite_start]أوافق على <a href="PrivacyandTermsofService.html" target="_blank">شروط الخدمة والخصوصية</a> [cite: 416, 417]
         </label>
       </div>
+      
+      <div id="recaptcha-container"></div>
       
       <div id="authStatus" class="note" style="color:var(--danger);"></div>
     </div>
@@ -73,6 +83,8 @@
 
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  
+  <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
   
   <script src="auth.js"></script>
 
