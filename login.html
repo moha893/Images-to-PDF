@@ -4,73 +4,126 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>تسجيل الدخول - Image2PDF</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMDJ8d/T/YpWJ8/H95lR/v3A/T+d/h9vE5cK5Ff5A/c/F4gR4J3gX2vG7I5B8Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<style>
-  /* ⚠️ ملاحظة: لتبسيط التنفيذ، يجب نسخ و لصق كل الأنماط 
-  الموجودة في وسم <style> بملف upload.html إلى هذا الملف.
-  */
-  
-  :root{
-    --bg1:#111111;
-    --bg2:#000000;
-    --card:#1a1a1a;
-    --accent:#ffffff;
-    --muted:#aaaaaa;
-    --glass: rgba(255,255,255,0.05);
-    --success:#10b981;
-    --danger:#fb7185;
-    --border: rgba(255,255,255,0.1);
-    --hover-bg: rgba(255,255,255,0.08);
-  }
-  /* ... قم بنسخ باقي تنسيقات CSS العامة هنا ... */
 
-  /* الأنماط الخاصة بصفحة الدخول */
+<style>
+  /* ====================================
+     CSS الأنماط العامة والمتغيرات
+     ==================================== */
+  :root{
+    --bg1:#111111; --bg2:#000000; --card:#1a1a1a; --accent:#ffffff;
+    --muted:#aaaaaa; --glass: rgba(255,255,255,0.05); --success:#10b981;
+    --danger:#fb7185; --border: rgba(255,255,255,0.1); --hover-bg: rgba(255,255,255,0.08);
+    --primary-font: 'Cairo', sans-serif;
+  }
+  
+  /* تنسيق الجسم للصفحة بالكامل */
+  body {
+    margin: 0; 
+    padding: 0; 
+    background-color: var(--bg2); 
+    color: var(--muted);
+    font-family: var(--primary-font); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    min-height: 100vh;
+  }
+  .app {
+    width: 100%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+  }
+
+  /* ====================================
+     CSS الأنماط الخاصة ببطاقة تسجيل الدخول
+     ==================================== */
   .login-container {
-    max-width: 400px;
-    width: 100%;
-    margin: 60px auto;
-    background: var(--card);
+    max-width: 400px; 
+    width: 90%; 
+    background: var(--card); 
     padding: 30px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
+    border-radius: 12px; 
+    border: 1px solid var(--border); 
     box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
   }
   .login-container h2 {
-    text-align: center;
-    color: var(--accent);
-    margin-bottom: 25px;
+    text-align: center; 
+    color: var(--accent); 
+    margin-bottom: 15px; 
+    font-weight: 700;
   }
-  .terms-checkbox {
-    display: flex;
-    align-items: flex-start;
+
+  /* ====================================
+     CSS زر تسجيل الدخول بجوجل
+     ==================================== */
+  .google-login-btn {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
     gap: 10px;
-    margin-top: 15px;
+    background: var(--accent); 
+    color: var(--bg2); 
+    padding: 12px 20px;
+    border-radius: 8px; 
+    font-weight: 600; 
+    cursor: pointer; 
+    font-size: 16px;
+    border: 1px solid var(--border); 
+    transition: background 0.2s, opacity 0.2s;
+    width: 100%; 
+    text-decoration: none; 
+  }
+  .google-login-btn:hover {
+    background: var(--muted);
+  }
+  .google-icon {
+    width: 20px; 
+    height: 20px; 
+  }
+  
+  /* ====================================
+     CSS مربع الشروط (Terms)
+     ==================================== */
+  .terms-checkbox {
+    display: flex; 
+    align-items: flex-start; 
+    gap: 10px; 
     font-size: 13px;
   }
   .terms-checkbox a {
-    color: var(--success);
-    text-decoration: none;
+    color: var(--success); 
+    text-decoration: none; 
+    font-weight: 600;
   }
-  .terms-checkbox input {
-    margin-top: 3px;
-    width: auto;
+  .terms-checkbox input[type="checkbox"] {
+    margin-top: 3px; 
+    width: 18px; 
+    height: 18px; 
+    accent-color: var(--success); 
   }
+  
+  /* ====================================
+     CSS reCAPTCHA ومربع الحالة
+     ==================================== */
   .g-recaptcha {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center; /* توسيط مربع reCAPTCHA */
+    margin-top: 15px; 
+    display: flex; 
+    justify-content: center; 
   }
-  .google-login-btn {
-    /* تنسيق زر جوجل موجود بالفعل في الـ CSS العام */
-    width: 100%;
-    margin-top: 20px;
+  .note {
+    font-size: 14px; 
+    margin-top: 10px;
   }
 </style>
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 </head>
 <body>
   <div class="app">
@@ -94,7 +147,7 @@
            data-callback="recaptchaCallback">
       </div>
       
-      <div id="authStatus" class="note" style="color:var(--danger); text-align:center; margin-top:10px;"></div>
+      <div id="authStatus" class="note" style="color:var(--danger); text-align:center;"></div>
     </div>
   </div>
 

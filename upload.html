@@ -244,6 +244,100 @@
       width: 100%; /* اجعل الزر يملأ العرض في الموبايل */
   }
 }
+/* ====================================
+     الأنماط الجديدة للملف الشخصي ورصيد الكريستال
+     ==================================== */
+     
+  /* قاعدة لإخفاء العناصر قبل تسجيل الدخول */
+  .hidden { 
+    display: none !important; 
+  }
+
+  /* تنسيق قسم الملف الشخصي ككل */
+  .user-profile {
+    display: flex; 
+    gap: 10px; 
+    align-items: center;
+    background: var(--glass); 
+    padding: 8px 12px; 
+    border-radius: 20px;
+    border: 1px solid var(--border);
+  }
+  
+  /* تنسيق صورة الملف الشخصي */
+  .profile-pic {
+    width: 36px; 
+    height: 36px; 
+    border-radius: 50%; 
+    object-fit: cover;
+    border: 2px solid var(--success);
+  }
+  
+  /* محاذاة الاسم ورصيد الكريستال عمودياً */
+  .user-info {
+    display: flex; 
+    flex-direction: column; 
+    line-height: 1.2;
+    align-items: flex-start;
+  }
+  
+  /* تنسيق الاسم */
+  .user-name {
+    color: var(--accent); 
+    font-weight: 600; 
+    font-size: 14px;
+    max-width: 100px; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+  }
+  
+  /* تنسيق رصيد الكريستال */
+  .crystal-balance {
+    display: flex; 
+    align-items: center; 
+    gap: 4px; 
+    font-size: 13px;
+  }
+  .crystal-icon {
+    width: 16px; 
+    height: 16px;
+  }
+  
+  /* التدرج اللوني لعدد الكريستال (بنفسجي متدرج مع الأزرق) */
+  .crystal-count {
+    font-weight: 700;
+    /* تحديد التدرج اللوني */
+    background: linear-gradient(45deg, #a855f7, #6366f1, #3b82f6); 
+    /* تطبيق التدرج على النص */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent; 
+  }
+  
+  /* تنسيق زر تسجيل الخروج */
+  .logout-btn {
+    background: none; 
+    border: none; 
+    color: var(--danger);
+    font-size: 20px; 
+    cursor: pointer; 
+    transition: color 0.2s;
+    padding: 0 5px; 
+    margin-left: 5px;
+  }
+  .logout-btn:hover {
+    color: #ff0000;
+  }
+  
+  /* تنسيق زر تسجيل الدخول (لضمان مظهره إذا لم يكن موجوداً) */
+  .google-login-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: var(--accent); color: var(--bg2); padding: 8px 15px;
+    border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 14px;
+    border: 1px solid var(--border); text-decoration: none;
+  }
 </style>
 </head>
 <body>
@@ -254,10 +348,25 @@
       <img src="https://i.ibb.co/zVQsZmHc/oe65gjzyswh7cuymlwqpu9tvc.webp" alt="Image2PDF Logo - محول الصور" loading="lazy">
     </div>
     
-    <a href="login.html" class="google-login-btn" id="googleLoginBtn" title="تسجيل الدخول عبر جوجل">
-  <img src="https://i.ibb.co/TqWpJLw9/1.png" alt="Google Icon" class="google-icon">
-  <span>تسجيل الدخول عبر جوجل</span>
-</a>
+    <a href="login.html" class="google-login-btn" id="preLoginBtn" title="تسجيل الدخول عبر جوجل">
+      <img src="https://i.ibb.co/TqWpJLw9/1.png" alt="Google Icon" class="google-icon">
+      <span>تسجيل الدخول عبر جوجل</span>
+    </a>
+
+    <div class="user-profile hidden" id="userProfileSection">
+        <img src="" alt="صورة المستخدم" class="profile-pic" id="profilePic">
+        <div class="user-info">
+            <span class="user-name" id="userName">الاسم</span> 
+            <div class="crystal-balance">
+                <img src="https://i.ibb.co/FjbHMVk/5a35b404eb18.png" alt="كريستال" class="crystal-icon">
+                <span class="crystal-count" id="crystalCount">20</span>
+            </div>
+        </div>
+        
+        <button class="logout-btn" id="logoutBtn" title="تسجيل الخروج">
+            <i class="fas fa-sign-out-alt"></i>
+        </button>
+    </div>
     
   </div>
   <div class="meta" style="display:flex; gap:10px; align-items:center;">
