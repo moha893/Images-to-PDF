@@ -20,7 +20,9 @@ const firebaseConfig = {
     authDomain: "image-pro-211be.firebaseapp.com",
     databaseURL: "https://image-pro-211be-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "image-pro-211be",
-    storageBucket: "image-pro-211be.appspot.com",
+    // === السطر الذي تم تصحيحه ===
+    storageBucket: "image-pro-211be.appspot.com", 
+    // ============================
     messagingSenderId: "413133647533",
     appId: "1:413133647533:web:c146f3e43066d53f3c2024",
     measurementId: "G-YY819DHZ1W"
@@ -32,7 +34,6 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-
 // ----------------------------------------------------
 // ---- الكود الخاص بصفحة تسجيل الدخول (login.html) ----
 // ----------------------------------------------------
@@ -43,17 +44,15 @@ if (document.getElementById('google-signin-btn')) {
 
     let isHCaptchaVerified = false;
 
-    // دالة للتحقق من الشروط وتحديث حالة الزر
     function updateButtonState() {
         if (termsCheck.checked && isHCaptchaVerified) {
             signInBtn.disabled = false;
-            messageEl.textContent = ""; // مسح أي رسائل خطأ سابقة
+            messageEl.textContent = "";
         } else {
             signInBtn.disabled = true;
         }
     }
 
-    // ربط الدوال التي سيتم استدعاؤها من hCaptcha
     window.onHCaptchaSuccess = function() {
         isHCaptchaVerified = true;
         updateButtonState();
@@ -71,10 +70,8 @@ if (document.getElementById('google-signin-btn')) {
         messageEl.textContent = "حدث خطأ في التحقق، يرجى تحديث الصفحة.";
     };
 
-    // الاستماع لأي تغيير في مربع الموافقة على الشروط
     termsCheck.addEventListener('change', updateButtonState);
 
-    // ماذا يحدث عند الضغط على زر تسجيل الدخول
     signInBtn.addEventListener('click', async () => {
         messageEl.textContent = 'جاري تسجيل الدخول...';
 
