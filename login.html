@@ -50,10 +50,9 @@
   }
   .note { font-size: 14px; margin-top: 10px; text-align: center; }
   
-  /* Styling for the reCAPTCHA container */
   #recaptcha-container {
-    margin: 0 auto; /* Center the widget */
-    transform: scale(0.95); /* Slightly scale down to fit better */
+    margin: 0 auto;
+    transform: scale(0.95);
     transform-origin: center;
   }
 </style>
@@ -71,7 +70,7 @@
       <div class="terms-checkbox">
         <input type="checkbox" id="termsCheckbox" required>
         <label for="termsCheckbox">
-          [cite_start]أوافق على <a href="PrivacyandTermsofService.html" target="_blank">شروط الخدمة والخصوصية</a> [cite: 416, 417]
+          أوافق على <a href="PrivacyandTermsofService.html" target="_blank">شروط الخدمة والخصوصية</a>
         </label>
       </div>
       
@@ -84,6 +83,10 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
   
+  <script>
+    // ⚠️ هام: الصق مفتاح الموقع العام (Site Key) هنا بين علامتي التنصيص
+    window.RECAPTCHA_SITE_KEY = '6LfToesrAAAAAMkT2ztYBgMdLaMWjRezwr3oqVfp'; 
+  </script>
   <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
   
   <script src="auth.js"></script>
