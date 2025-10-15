@@ -14,17 +14,18 @@ import {
     setDoc 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// --- إعدادات Firebase من متغيرات البيئة في Vercel ---
-// هذا هو الكود الآمن الذي يقرأ المفاتيح من Vercel بدلاً من كتابتها مباشرة
+// --- إعدادات Firebase (مؤقتة ومباشرة للتجربة فقط) ---
+// !! تحذير: هذه الطريقة غير آمنة للإنتاج النهائي !!
+// لقد استخدمت نفس البيانات التي أرسلتها في البداية.
 const firebaseConfig = {
-    apiKey:             import.meta.env.VITE_FIREBASE_API_KEY,
-    authDomain:         import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-    databaseURL:        import.meta.env.VITE_FIREBASE_DATABASE_URL,
-    projectId:          import.meta.env.VITE_FIREBASE_PROJECT_ID,
-    storageBucket:      import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId:  import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-    appId:              import.meta.env.VITE_FIREBASE_APP_ID,
-    measurementId:      import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+    apiKey: "AIzaSyCEPxngpX_mvDihM36sunp5vx91assVfaM",
+    authDomain: "image-pro-211be.firebaseapp.com",
+    databaseURL: "https://image-pro-211be-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "image-pro-211be",
+    storageBucket: "image-pro-211be.appspot.com", // Corrected from .firebasestorage.app
+    messagingSenderId: "413133647533",
+    appId: "1:413133647533:web:c146f3e43066d53f3c2024",
+    measurementId: "G-YY819DHZ1W"
 };
 
 // تهيئة Firebase وبدء تشغيل الخدمات
@@ -67,8 +68,11 @@ if (document.getElementById('google-signin-btn')) {
 
             if (!userSnap.exists()) {
                 await setDoc(userRef, {
-                    displayName: user.displayName, email: user.email,
-                    photoURL: user.photoURL, plan: "free", crystals: 20,
+                    displayName: user.displayName,
+                    email: user.email,
+                    photoURL: user.photoURL,
+                    plan: "free",
+                    crystals: 20,
                     createdAt: new Date()
                 });
             }
