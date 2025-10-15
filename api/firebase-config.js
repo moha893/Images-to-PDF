@@ -1,8 +1,12 @@
-// This is a Vercel Serverless Function.
-// Its purpose is to securely provide the Firebase config to the client.
-
 export default function handler(request, response) {
-  // Read the environment variables from Vercel's server-side environment.
+  
+  // الكود التالي سيطبع لنا قيم المتغيرات كما يراها خادم Vercel
+  console.log("--- Debugging Environment Variables ---");
+  console.log("API Key:", process.env.NEXT_PUBLIC_FIREBASE_API_KEY);
+  console.log("Auth Domain:", process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN);
+  console.log("Project ID:", process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID);
+  console.log("------------------------------------");
+
   const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
     authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -12,7 +16,5 @@ export default function handler(request, response) {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   };
 
-  // Send the configuration object back to the client as a JSON response.
-  // The status code 200 means "OK".
   response.status(200).json(firebaseConfig);
 }
