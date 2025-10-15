@@ -1,65 +1,103 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول — Mega</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-    <style>
-        :root {
-            --dark-bg: #121212; --secondary-bg: #1e1e1e; --text-color: #ffffff;
-            --primary-color: #007bff; --border-color: rgba(255, 255, 255, 0.1);
-        }
-        body {
-            font-family: "Cairo", sans-serif; background-color: var(--dark-bg);
-            color: var(--text-color); display: flex; align-items: center;
-            justify-content: center; min-height: 100vh; margin: 0;
-        }
-        .login-container {
-            background-color: var(--secondary-bg); padding: 40px;
-            border-radius: 12px; border: 1px solid var(--border-color);
-            text-align: center; width: 90%; max-width: 400px;
-        }
-        h1 { margin-top: 0; }
-        p { color: #a0a0a0; }
-        .terms { margin: 20px 0; display: flex; align-items: center; justify-content: center; }
-        .terms label { margin-inline-start: 10px; }
-        .terms a { color: var(--primary-color); text-decoration: none; }
-        .h-captcha { margin: 20px 0; display: flex; justify-content: center; }
-        #google-signin-btn {
-            background-color: #4285F4; color: white; border: none; padding: 12px 24px;
-            font-family: inherit; font-size: 16px; border-radius: 8px; cursor: pointer;
-            transition: all 0.3s;
-        }
-        #google-signin-btn:disabled { background-color: #333; cursor: not-allowed; opacity: 0.6; }
-        #message { margin-top: 15px; color: #ff6b6b; font-weight: bold; min-height: 20px; }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>تسجيل الدخول - Image2PDF</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMDJ8d/T/YpWJ8/H95lR/v3A/T+d/h9vE5cK5Ff5A/c/F4gR4J3gX2vG7I5B8Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+  /* ⚠️ ملاحظة: لتبسيط التنفيذ، يجب نسخ و لصق كل الأنماط 
+  الموجودة في وسم <style> بملف upload.html إلى هذا الملف.
+  */
+  
+  :root{
+    --bg1:#111111;
+    --bg2:#000000;
+    --card:#1a1a1a;
+    --accent:#ffffff;
+    --muted:#aaaaaa;
+    --glass: rgba(255,255,255,0.05);
+    --success:#10b981;
+    --danger:#fb7185;
+    --border: rgba(255,255,255,0.1);
+    --hover-bg: rgba(255,255,255,0.08);
+  }
+  /* ... قم بنسخ باقي تنسيقات CSS العامة هنا ... */
+
+  /* الأنماط الخاصة بصفحة الدخول */
+  .login-container {
+    max-width: 400px;
+    width: 100%;
+    margin: 60px auto;
+    background: var(--card);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+  .login-container h2 {
+    text-align: center;
+    color: var(--accent);
+    margin-bottom: 25px;
+  }
+  .terms-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 15px;
+    font-size: 13px;
+  }
+  .terms-checkbox a {
+    color: var(--success);
+    text-decoration: none;
+  }
+  .terms-checkbox input {
+    margin-top: 3px;
+    width: auto;
+  }
+  .g-recaptcha {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* توسيط مربع reCAPTCHA */
+  }
+  .google-login-btn {
+    /* تنسيق زر جوجل موجود بالفعل في الـ CSS العام */
+    width: 100%;
+    margin-top: 20px;
+  }
+</style>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 </head>
 <body>
+  <div class="app">
     <div class="login-container">
-        <h1>تسجيل الدخول</h1>
-        <p>مرحبًا بك! سجل دخولك للمتابعة.</p>
-        
-        <div class="terms">
-            <input type="checkbox" id="terms-checkbox">
-            <label for="terms-checkbox">
-                أوافق على <a href="PrivacyandTermsofService.html" target="_blank">شروط الخدمة</a>
-            </label>
-        </div>
+      <h2>تسجيل الدخول / إنشاء حساب</h2>
 
-        <div class="h-captcha" 
-             data-sitekey="53d8ae34-2c6a-4b4a-9178-988ed78ad00a"
-             data-callback="onHCaptchaSuccess"
-             data-expired-callback="onHCaptchaExpired"
-             data-error-callback="onHCaptchaError">
-        </div>
-        
-        <button id="google-signin-btn" disabled>تسجيل الدخول عبر جوجل</button>
+      <button class="google-login-btn" id="loginWithGoogleBtn">
+        <img src="https://i.ibb.co/TqWpJLw9/1.png" alt="Google Icon" class="google-icon">
+        <span>تسجيل الدخول عبر جوجل</span>
+      </button>
 
-        <p id="message"></p>
+      <div class="terms-checkbox">
+        <input type="checkbox" id="termsCheckbox" required>
+        <label for="termsCheckbox">
+          أوافق على <a href="PrivacyandTermsofService.html" target="_blank">شروط الخدمة والخصوصية</a>
+        </label>
+      </div>
+
+      <div class="g-recaptcha" 
+           data-sitekey="6LfToesrAAAAAMkT2ztYBgMdLaMWjRezwr3oqVfp"
+           data-callback="recaptchaCallback">
+      </div>
+      
+      <div id="authStatus" class="note" style="color:var(--danger); text-align:center; margin-top:10px;"></div>
     </div>
+  </div>
 
-    <script type="module" src="firebase-auth.js"></script>
+<script src="auth.js"></script>
 </body>
 </html>

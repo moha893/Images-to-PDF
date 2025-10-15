@@ -60,7 +60,7 @@
   header{
     display:flex; gap:18px; align-items:center; justify-content:space-between; margin-bottom:18px;
   }
-  .brand {display:flex; gap:12px; align-items:center}
+  .brand {display:flex; align-items:center}
   .logo{
     width:52px; height:52px; border-radius:10px; background:var(--accent);
     display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--bg2);font-size:18px;
@@ -200,29 +200,73 @@
         padding: 8px 10px;
     }
   }
+/* تنسيق زر تسجيل الدخول الجديد */
+.google-login-btn {
+  /* لضمان محاذاة النص والأيقونة */
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* مسافة بين الأيقونة والنص */
+  
+  /* التنسيق الأساسي للزر */
+  background: var(--accent); /* اللون الأبيض */
+  color: var(--bg2); /* النص باللون الأسود */
+  padding: 10px 18px; 
+  border-radius: 8px; 
+  font-weight: 600; 
+  cursor: pointer;
+  font-size: 14px;
+  border: 1px solid var(--border); /* إضافة حد خفيف */
+  transition: background 0.2s, opacity 0.2s;
+}
 
+.google-login-btn:hover {
+  background: var(--muted); /* لون رمادي فاتح عند التمرير */
+}
+
+/* الأيقونة المدمجة عبر SVG data URL */
+.google-icon {
+  width: 18px; 
+  height: 18px;
+  /* ⚠️ يجب التأكد من عدم وجود background-image أو background-size هنا */
+}
+/* تعديل بسيط لضمان محاذاة الشعار الأصلي بعد حذف العنوان */
+.brand {
+  display: flex; 
+  align-items: center;
+  /* يمكنك إعادة إضافة gap: 12px; هنا إذا أردت مسافة بين الشعار وزر جوجل */
+  gap: 12px;
+}
+
+/* تنسيق الموبايل */
+@media (max-width:900px){
+  .google-login-btn {
+      width: 100%; /* اجعل الزر يملأ العرض في الموبايل */
+  }
+}
 </style>
 </head>
 <body>
   <div class="app" role="application" aria-label="محول الصور">
     <header>
-      <div class="brand">
-        <div class="logo">
-          <img src="https://i.ibb.co/zVQsZmHc/oe65gjzyswh7cuymlwqpu9tvc.webp" alt="Image2PDF Logo - محول الصور" loading="lazy">
-        </div>
-        <div>
-          <h1 data-key="appName">Image2PDF — محول الصور الاحترافي</h1>
-          <p class="lead" data-key="appTagline">خدمة محلية في المتصفح — تحويل إلى PDF & تغيير ترميز الصور</p>
-        </div>
-      </div>
-      <div class="meta" style="display:flex; gap:10px; align-items:center;">
-        <button class="lang-toggle" id="langToggle">
-          <span id="langFlag">🇬🇧</span> <span id="langText">English</span>
-        </button>
-        <div class="small" data-key="version">النسخة: <strong>1.0</strong></div>
-      </div>
-    </header>
-
+  <div class="brand">
+    <div class="logo">
+      <img src="https://i.ibb.co/zVQsZmHc/oe65gjzyswh7cuymlwqpu9tvc.webp" alt="Image2PDF Logo - محول الصور" loading="lazy">
+    </div>
+    
+    <a href="login.html" class="google-login-btn" id="googleLoginBtn" title="تسجيل الدخول عبر جوجل">
+  <img src="https://i.ibb.co/TqWpJLw9/1.png" alt="Google Icon" class="google-icon">
+  <span>تسجيل الدخول عبر جوجل</span>
+</a>
+    
+  </div>
+  <div class="meta" style="display:flex; gap:10px; align-items:center;">
+    <button class="lang-toggle" id="langToggle">
+      <span id="langFlag">🇬🇧</span> <span id="langText">English</span>
+    </button>
+    <div class="small" data-key="version">النسخة: <strong>1.0</strong></div>
+  </div>
+</header>
     <div class="main">
       <div class="panel" aria-hidden="false">
         <div class="tabs" role="tablist">
