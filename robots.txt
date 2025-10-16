@@ -1,0 +1,19 @@
+# Allow all friendly web crawlers full access
+User-agent: *
+
+# Pages that crawlers are allowed to visit.
+# This is generally the default, but explicitly stating them can be useful.
+Allow: /
+Allow: /index.html
+Allow: /upload.html
+Allow: /about.html
+Allow: /PrivacyandTermsofService.html
+Allow: /login.html
+
+# Disallow crawlers from accessing user-specific pages.
+# This is important to prevent indexing of user dashboards.
+Disallow: /home.html
+
+# Location of the sitemap file.
+# This helps crawlers find all your important pages quickly.
+Sitemap: https://meega.gleeze.com/sitemap.xml
