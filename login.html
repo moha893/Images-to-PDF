@@ -5,50 +5,53 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>تسجيل الدخول / إنشاء حساب</title>
 
-<script type="module">
-  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+<!-- استدعاء Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
-  const SUPABASE_URL = "https://vayuuzbcgemrlgvmktzl.supabase.co"; // ضع رابط مشروعك هنا
-  const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY"; // ضع مفتاح المشروع هنا
+<script>
+  // استبدل هذه القيم بمشروعك
+  const SUPABASE_URL = "https://vayuuzbcgemrlgvmktzl.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZheXV1emJjZ2Vtcmxndm1rdHpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0NDA4MDQsImV4cCI6MjA3NjAxNjgwNH0.yQIuNEb8QRBOaSGW0cKB8cQvPpZMWG7T_0gnufjVa0g";
 
-  const supabase = createClient(eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZheXV1emJjZ2Vtcmxndm1rdHpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0NDA4MDQsImV4cCI6MjA3NjAxNjgwNH0.yQIuNEb8QRBOaSGW0cKB8cQvPpZMWG7T_0gnufjVa0g);
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   // تسجيل الدخول
-  window.login = async function() {
+  function login() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-
-    if (error) {
-      alert("❌ خطأ في تسجيل الدخول: " + error.message);
-    } else {
-      // تسجيل الدخول ناجح → home.html
-      window.location.href = "home.html";
-    }
-  };
+    supabase.auth.signInWithPassword({ email, password })
+      .then(({ data, error }) => {
+        if (error) {
+          alert("❌ خطأ في تسجيل الدخول: " + error.message);
+        } else {
+          window.location.href = "home.html";
+        }
+      });
+  }
 
   // إنشاء حساب جديد
-  window.signup = async function() {
+  function signup() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    supabase.auth.signUp({ email, password })
+      .then(({ data, error }) => {
+        if (error) {
+          alert("❌ خطأ في إنشاء الحساب: " + error.message);
+        } else {
+          alert("✅ تم إنشاء الحساب، يرجى التحقق من بريدك الإلكتروني إذا لزم الأمر.");
+        }
+      });
+  }
 
-    if (error) {
-      alert("❌ خطأ في إنشاء الحساب: " + error.message);
-    } else {
-      alert("✅ تم إنشاء الحساب، يرجى التحقق من بريدك الإلكتروني إذا لزم الأمر.");
-    }
+  // التحقق من تسجيل الدخول عند التحميل
+  window.onload = function() {
+    supabase.auth.getSession()
+      .then(({ data: { session } }) => {
+        if (session) window.location.href = "home.html";
+      });
   };
-
-  // إذا كان المستخدم مسجل الدخول مسبقًا → تحويل مباشرة إلى home.html
-  window.addEventListener('load', async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session) {
-      window.location.href = "home.html";
-    }
-  });
 </script>
 
 <style>
