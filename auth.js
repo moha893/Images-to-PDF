@@ -1,5 +1,7 @@
 /*
- * ملف auth.js - مسؤول عن جميع عمليات المصادقة عبر Supabase
+ * Supabase Auth Module (Email/Password & Google)
+ * File: auth.js
+ * Purpose: Handles user authentication and redirects to home.html on success.
  */
 
 // ===============================================
@@ -14,76 +16,125 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 // تهيئة عميل Supabase
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+const statusEl = document.getElementById('auth-status');
+
 // ===============================================
-// 2. وظيفة تسجيل الدخول عبر Google
+// 2. وظيفة تسجيل الدخول عبر الإيميل/كلمة المرور
+// ===============================================
+
+/**
+ * @async
+ * @function signInWithEmail
+ * @description يتعامل مع تسجيل الدخول عبر البريد الإلكتروني وكلمة المرور.
+ */
+async function signInWithEmail() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    if (!email || !password) {
+        statusEl.textContent = 'الرجاء إدخال البريد الإلكتروني وكلمة المرور.';
+        return;
+    }
+    
+    statusEl.textContent = 'جاري تسجيل الدخول...';
+
+    const { error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+    });
+
+    if (error) {
+        console.error('Email Sign-in Error:', error.message);
+        statusEl.textContent = `فشل تسجيل الدخول: ${error.message}`;
+        // ملاحظة: لإصدار نهائي، لا يجب أن تظهر رسالة الخطأ للمستخدم لأسباب أمنية.
+    }
+    // في حالة النجاح، سيتم التعامل مع التوجيه في دالة onAuthStateChange
+}
+
+// ===============================================
+// 3. وظيفة تسجيل الدخول عبر Google (معدلة قليلاً)
 // ===============================================
 
 /**
  * @async
  * @function signInWithGoogle
- * @description تبدأ عملية تسجيل الدخول عبر Google OAuth.
+ * @description يبدأ عملية تسجيل الدخول عبر Google OAuth.
  */
 async function signInWithGoogle() {
-    // عرض رسالة حالة للمستخدم
-    document.getElementById('auth-status').textContent = 'جاري توجيهك لصفحة جوجل...';
-    
+    statusEl.textContent = 'جاري التوجيه لصفحة جوجل...';
     try {
         const { error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                // عنوان URL الذي سيتم إعادة توجيه المستخدم إليه بعد تسجيل الدخول الناجح
-                // يجب أن يتطابق هذا مع ما أضفته في الخطوة 1 (Redirect URLs)
-                redirectTo: window.location.origin + '/upload.html', 
+                // عنوان URL الذي سيتم إعادة توجيه المستخدم إليه بعد تسجيل الدخول
+                // قمنا بتغييره إلى home.html
+                redirectTo: window.location.origin + '/home.html', 
             },
         });
 
         if (error) {
-            console.error('فشل تسجيل الدخول:', error.message);
-            document.getElementById('auth-status').textContent = `فشل: ${error.message}`;
-            alert(`فشل تسجيل الدخول. يرجى مراجعة إعدادات Supabase.`);
+            console.error('Google Sign-in Error:', error.message);
+            statusEl.textContent = `فشل تسجيل الدخول عبر جوجل: ${error.message}`;
         }
-        // إذا نجح الطلب، سيتم توجيه المستخدم تلقائيًا بواسطة Supabase
     } catch (err) {
-        console.error('حدث خطأ غير متوقع:', err);
-        document.getElementById('auth-status').textContent = 'حدث خطأ غير متوقع.';
+        console.error('An unexpected error occurred during sign-in:', err);
+        statusEl.textContent = 'حدث خطأ غير متوقع.';
     }
 }
 
 // ===============================================
-// 3. ربط الدالة بالزر عند تحميل الصفحة
+// 4. تتبع حالة المصادقة (التوجيه إلى home.html)
 // ===============================================
 
 /**
- * @function setupEventListeners
- * @description يربط وظيفة تسجيل الدخول بزر HTML.
+ * @async
+ * @function handleAuthStateChange
+ * @description تتبع حالة مصادقة المستخدم وتوجه إلى home.html عند النجاح.
  */
-function setupEventListeners() {
-    // البحث عن الزر باستخدام الـ ID 'google-sign-in-btn' من ملف login.html
-    const signInButton = document.getElementById('google-sign-in-btn');
-    if (signInButton) {
-        // عند النقر على الزر، قم بتشغيل وظيفة تسجيل الدخول
-        signInButton.addEventListener('click', signInWithGoogle);
-    } else {
-        console.error("لم يتم العثور على زر تسجيل الدخول ('google-sign-in-btn') في الصفحة.");
+async function handleAuthStateChange(event, session) {
+    if (event === 'SIGNED_IN' && session) {
+        console.log('User signed in. Redirecting to home.html');
+        // ⚠️ التوجيه إلى home.html ⚠️
+        window.location.href = '/home.html'; 
     }
 }
 
-// تشغيل وظيفة ربط الأحداث عند تحميل محتوى الصفحة بالكامل
-document.addEventListener('DOMContentLoaded', setupEventListeners);
-
-
 // ===============================================
-// 4. (إضافي) تتبع حالة المصادقة بعد العودة
+// 5. ربط الدوال بالأزرار
 // ===============================================
 
-// هذه الدالة مهمة لإعادة توجيه المستخدم عند عودته من صفحة Google
-supabase.auth.onAuthStateChange((event, session) => {
-    if (event === 'SIGNED_IN' && session) {
-        console.log('User signed in successfully. Redirecting...');
-        // تأكد من أن هذا المسار هو صفحة المستخدم الخاصة بك
-        window.location.href = '/upload.html'; 
+function setupEventListeners() {
+    const emailSignInButton = document.getElementById('email-sign-in-btn');
+    const googleSignInButton = document.getElementById('google-sign-in-btn');
+
+    // ربط زر الإيميل
+    if (emailSignInButton) {
+        emailSignInButton.addEventListener('click', signInWithEmail);
     }
-    if (event === 'SIGNED_OUT') {
-        document.getElementById('auth-status').textContent = 'تم تسجيل الخروج بنجاح.';
+    
+    // ربط زر جوجل
+    if (googleSignInButton) {
+        googleSignInButton.addEventListener('click', signInWithGoogle);
     }
+}
+
+// عند تحميل الصفحة بالكامل، قم بإعداد مستمعي الأحداث
+document.addEventListener('DOMContentLoaded', () => {
+    // التأكد من وجود العنصر 'auth-status'
+    if (!statusEl) {
+        console.warn('Authentication status element (auth-status) not found.');
+    }
+    setupEventListeners();
+    // إعداد مستمع لتغييرات حالة المصادقة لإعادة التوجيه
+    supabase.auth.onAuthStateChange(handleAuthStateChange);
 });
+
+// يمكنك إضافة وظيفة تسجيل الخروج هنا لاستخدامها لاحقاً
+window.signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (!error) {
+        window.location.href = '/login.html'; 
+    } else {
+        console.error('Error signing out:', error.message);
+    }
+};

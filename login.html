@@ -3,43 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحة تسجيل الدخول - Supabase</title>
+    <title>تسجيل الدخول — Mega</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <style>
-        body { font-family: Arial, sans-serif; background-color: #121212; color: #ffffff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .login-box { background-color: #1e1e1e; padding: 40px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); text-align: center; }
-        h1 { color: #007bff; margin-bottom: 30px; }
+        :root {
+            --dark-bg: #121212;
+            --secondary-bg: #1e1e1e; 
+            --text-color: #ffffff;
+            --primary-color: #007bff; 
+            --primary-hover: #0056b3;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+        body { 
+            font-family: "Cairo", sans-serif;
+            background-color: var(--dark-bg); 
+            color: var(--text-color);
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            min-height: 100vh; 
+            margin: 0; 
+            text-align: center;
+        }
+        .login-box {
+            width: 90%;
+            max-width: 400px;
+            padding: 40px;
+            background-color: var(--secondary-bg);
+            border-radius: 12px; 
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        h1 { 
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        /* أنماط حقول الإدخال */
+        .input-group {
+            margin-bottom: 15px;
+        }
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        /* زر تسجيل الدخول التقليدي */
+        #email-sign-in-btn {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        #email-sign-in-btn:hover {
+            background-color: var(--primary-hover);
+        }
+        /* فاصل بين الطرق */
+        .separator {
+            color: var(--text-color);
+            margin: 20px 0;
+            position: relative;
+            font-size: 14px;
+        }
+        .separator::before, .separator::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background-color: var(--border-color);
+        }
+        .separator::before { left: 0; }
+        .separator::after { right: 0; }
         
-        /* هذا هو الزر الذي سنربطه بـ Supabase */
+        /* زر تسجيل الدخول عبر جوجل */
         #google-sign-in-btn {
             background-color: #ffffff;
             color: #444;
-            border: none;
-            border-radius: 4px;
-            padding: 10px 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 12px 24px;
             font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            gap: 12px;
             transition: background-color 0.3s;
+            width: 100%;
+            text-decoration: none;
         }
-        #google-sign-in-btn:hover { background-color: #f0f0f0; }
-        #google-sign-in-btn img { width: 20px; height: 20px; }
+
+        #google-sign-in-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        #google-sign-in-btn img {
+            width: 20px;
+            height: 20px;
+        }
+        
+        #auth-status {
+            color: #ffcc00; /* لون أصفر تحذيري للحالة */
+            margin-top: 15px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
 
     <div class="login-box">
-        <h1>تسجيل الدخول</h1>
+        <h1>تسجيل الدخول إلى Mega</h1>
+        
+        <div class="input-group">
+            <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="كلمة المرور" required>
+        </div>
+        
+        <button id="email-sign-in-btn">تسجيل الدخول</button>
+
+        <div class="separator">أو</div>
         
         <button id="google-sign-in-btn">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo">
-    <span>تسجيل الدخول عبر جوجل</span>
-</button>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google G Logo">
+            <span>تسجيل الدخول عبر جوجل</span>
+        </button>
         
-        <p id="auth-status" style="margin-top: 20px; color: yellow;"></p>
+        <p id="auth-status"></p>
     </div>
 
     <script src="auth.js"></script>
