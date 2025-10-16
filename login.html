@@ -3,47 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحة تسجيل الدخول - Firebase & Vercel</title>
+    <title>تسجيل الدخول — Mega</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        :root {
+            --dark-bg: #121212;
+            --secondary-bg: #1e1e1e; 
+            --card-bg: #2a2a2a;
+            --text-color: #ffffff;
+            --primary-color: #007bff; 
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+        body { 
+            font-family: "Cairo", sans-serif;
+            background-color: var(--dark-bg); 
+            color: var(--text-color);
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            min-height: 100vh; 
+            margin: 0; 
             text-align: center;
-            padding-top: 50px;
         }
-        #login-btn, #logout-btn {
-            background-color: #4285F4;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 4px;
-            margin-top: 20px;
+        .login-box {
+            width: 90%;
+            max-width: 400px;
+            padding: 40px;
+            background-color: var(--secondary-bg);
+            border-radius: 12px; 
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        h1 { 
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        p {
+            color: var(--text-color);
+            margin-bottom: 30px;
+        }
+        .google-login-button {
+            background-color: #ffffff;
+            color: #444;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 12px 24px;
             font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* توسيط الزر */
+            gap: 12px;
+            transition: background-color 0.3s;
+            width: 100%; /* اجعل الزر يملأ العرض */
+            text-decoration: none;
         }
-        #logout-btn {
-            background-color: #DB4437; /* لون الخروج */
-            display: none; /* مخفي في البداية */
+
+        .google-login-button:hover {
+            background-color: #f5f5f5;
         }
-        #login-btn {
-            display: block; /* ظاهر في البداية */
-            margin: 20px auto;
+
+        .google-login-button img {
+            width: 20px;
+            height: 20px;
         }
-        #user-status {
-            margin-top: 30px;
-            font-size: 18px;
+        
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: var(--primary-color);
+            text-decoration: none;
             font-weight: bold;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <h1>مرحباً بك في صفحة تسجيل الدخول</h1>
+    <div class="login-box">
+        <h1>تسجيل الدخول إلى Mega</h1>
+        <p>استخدم حساب جوجل الخاص بك لمتابعة خدماتنا بأمان تام.</p>
 
-    <button id="login-btn">تسجيل الدخول باستخدام Google 🚀</button>
-    <button id="logout-btn">تسجيل الخروج</button>
-    
-    <div id="user-status">الرجاء تسجيل الدخول...</div>
+        <button id="google-sign-in-btn" class="google-login-button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google G Logo">
+            <span>تسجيل الدخول عبر جوجل</span>
+        </button>
+        
+        <a href="index.html" class="back-link">→ العودة للرئيسية</a>
+    </div>
 
-    <script type="module" src="./firebase-config.js"></script>
-    <script type="module" src="./login.js"></script>
+    <script src="auth.js"></script>
 </body>
 </html>
