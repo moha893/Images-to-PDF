@@ -918,13 +918,18 @@ dropArea.addEventListener('drop', e=>{ e.preventDefault();
 
 
 
-        supabase.auth.onAuthStateChange((_event, session) => {
-
-            updateUI(session);
-
-        });
-
-    });
+        supabase.auth.onAuthStateChange((event, session) => {
+    // إذا كان الحدث هو تسجيل دخول ناجح (SIGNED_IN)
+    if (event === 'SIGNED_IN') {
+        // انتظر لحظة قصيرة للتأكد من اكتمال الجلسة ثم انتقل إلى home.html
+        setTimeout(() => {
+            window.location.href = 'home.html';
+        }, 100);
+    } else {
+        // في الحالات الأخرى (مثل تحديث الصفحة أو تسجيل الخروج)، قم فقط بتحديث الواجهة
+        updateUI(session);
+    }
+});
 
 
 
