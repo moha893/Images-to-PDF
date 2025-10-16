@@ -54,10 +54,8 @@
             font-size: 16px;
             box-sizing: border-box;
         }
-        /* زر تسجيل الدخول التقليدي */
-        #email-sign-in-btn {
-            background-color: var(--primary-color);
-            color: var(--text-color);
+        /* أنماط الأزرار الرئيسية */
+        #email-sign-in-btn, #sign-up-btn {
             padding: 12px 24px;
             font-size: 16px;
             font-weight: 700;
@@ -65,68 +63,39 @@
             border-radius: 8px;
             cursor: pointer;
             width: 100%;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, border-color 0.3s;
+            margin-top: 10px;
+        }
+        /* زر تسجيل الدخول */
+        #email-sign-in-btn {
+            background-color: var(--primary-color);
+            color: var(--text-color);
         }
         #email-sign-in-btn:hover {
             background-color: var(--primary-hover);
         }
-        /* فاصل بين الطرق */
-        .separator {
-            color: var(--text-color);
-            margin: 20px 0;
-            position: relative;
-            font-size: 14px;
+        /* زر إنشاء حساب جديد */
+        #sign-up-btn {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
         }
-        .separator::before, .separator::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            width: 40%;
-            height: 1px;
-            background-color: var(--border-color);
-        }
-        .separator::before { left: 0; }
-        .separator::after { right: 0; }
-        
-        /* زر تسجيل الدخول عبر جوجل */
-        #google-sign-in-btn {
-            background-color: #ffffff;
-            color: #444;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            transition: background-color 0.3s;
-            width: 100%;
-            text-decoration: none;
+        #sign-up-btn:hover {
+            background-color: rgba(0, 123, 255, 0.1);
         }
 
-        #google-sign-in-btn:hover {
-            background-color: #f5f5f5;
-        }
-
-        #google-sign-in-btn img {
-            width: 20px;
-            height: 20px;
-        }
-        
         #auth-status {
-            color: #ffcc00; /* لون أصفر تحذيري للحالة */
-            margin-top: 15px;
+            color: #ffcc00; 
+            margin-top: 20px;
             font-size: 14px;
+            min-height: 20px; /* لتجنب اهتزاز الواجهة */
         }
     </style>
 </head>
 <body>
 
     <div class="login-box">
-        <h1>تسجيل الدخول إلى Mega</h1>
+        <h1>تسجيل الدخول / إنشاء حساب</h1>
         
         <div class="input-group">
             <input type="email" id="email" placeholder="البريد الإلكتروني" required>
@@ -136,13 +105,7 @@
         </div>
         
         <button id="email-sign-in-btn">تسجيل الدخول</button>
-
-        <div class="separator">أو</div>
-        
-        <button id="google-sign-in-btn">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google G Logo">
-            <span>تسجيل الدخول عبر جوجل</span>
-        </button>
+        <button id="sign-up-btn">إنشاء حساب جديد</button>
         
         <p id="auth-status"></p>
     </div>
