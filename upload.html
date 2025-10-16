@@ -27,7 +27,8 @@
 <meta name="keywords" lang="es-mx" content="convertidor de foto a pdf, conversor de imagenes gratis, cambiar formato de foto, convertir jpg a png, convertir fotos en línea, jpg a pdf, png a pdf, webp a jpg, mejor conversor de fotos, comprimir imagenes a pdf, juntar fotos en pdf, convertidor heic, herramienta de conversion de imagenes"/>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMDJ8d/T/YpWJ8/H95lR/v3A/T+d/h9vE5cK5Ff5A/c/F4gR4J3gX2vG7I5B8Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <style>
   :root{
     --bg1:#111111;
@@ -351,7 +352,15 @@
       <img src="https://i.ibb.co/TqWpJLw9/1.png" alt="Google Icon" class="google-icon">
       <span>تسجيل الدخول عبر جوجل</span>
     </a>
-
+     <div id="userProfile" style="display: none; align-items: center; gap: 15px;">
+    <img id="userAvatar" src="" alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%;">
+    <div style="color: white; font-weight: bold;" id="userName"></div>
+    <div style="display: flex; align-items: center; gap: 5px;">
+        <img src="https://i.ibb.co/FjbHMVk/5a35b404eb18.png" alt="Crystal" style="width: 18px; height: 18px;">
+        <span id="crystalCount" style="font-weight: 700; background: linear-gradient(45deg, #a855f7, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">20</span>
+    </div>
+    <button id="logoutBtn" style="background: var(--danger-color); color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-weight: bold;">خروج</button>
+</div>
     <div class="user-profile hidden" id="userProfileSection">
         <img src="" alt="صورة المستخدم" class="profile-pic" id="profilePic">
         <div class="user-info">
@@ -512,10 +521,8 @@ const translations = {
     appName: 'Image2PDF — محول الصور الاحترافي',
     appTagline: 'خدمة محلية في المتصفح — تحويل إلى PDF & تغيير ترميز الصور',
     version: 'النسخة: 1.0',
-    // ...
-upgradeProText: 'الترقية إلى Pro',
-tabPdf: 'الميزات الرئيسية: تحويل إلى PDF',
-// ...
+    upgradeProText: 'الترقية إلى Pro'
+    tabPdf: 'الميزات الرئيسية: تحويل إلى PDF',
     tabConvert: 'خدمة إضافية: تغيير ترميز الصور',
     labelPdfFiles: 'رفع صور (متعدد) — اسحب وأسقط أو اختر من الجهاز',
     labelPageSize: 'حجم الصفحة',
@@ -894,6 +901,88 @@ dropArea.addEventListener('drop', e=>{ e.preventDefault();
       }
   }
 });
+
+    const SUPABASE_URL = "https://vayuuzbcgemrlgvmktzl.supabase.co";
+
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZheXV1emJjZ2Vtcmxndm1rdHpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0NDA4MDQsImV4cCI6MjA3NjAxNjgwNH0.yQIuNEb8QRBOaSGW0cKB8cQvPpZMWG7T_0gnufjVa0g";
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+
+
+    document.addEventListener('DOMContentLoaded', async () => {
+
+        const { data: { session } } = await supabase.auth.getSession();
+
+        updateUI(session);
+
+
+
+        supabase.auth.onAuthStateChange((_event, session) => {
+
+            updateUI(session);
+
+        });
+
+    });
+
+
+
+    function updateUI(session) {
+
+        const loginButton = document.querySelector('.google-login-button, #preLoginBtn, #google-sign-in-btn');
+
+        const userProfile = document.getElementById('userProfile');
+
+
+
+        if (session) {
+
+            // User is logged in
+
+            loginButton.style.display = 'none';
+
+            userProfile.style.display = 'flex';
+
+
+
+            const user = session.user;
+
+            const userName = user.user_metadata?.full_name || user.email.split('@')[0];
+
+            const userAvatar = user.user_metadata?.avatar_url || 'https://i.ibb.co/qCbQ2Yc/default-avatar.png';
+
+
+
+            document.getElementById('userName').textContent = userName;
+
+            document.getElementById('userAvatar').src = userAvatar;
+
+            // Crystal count is static for now
+
+            // document.getElementById('crystalCount').textContent = '20';
+
+
+
+            document.getElementById('logoutBtn').onclick = async () => {
+
+                await supabase.auth.signOut();
+
+                window.location.reload(); // Reload to show login button again
+
+            };
+
+        } else {
+
+            // User is logged out
+
+            loginButton.style.display = 'flex';
+
+            userProfile.style.display = 'none';
+
+        }
+
+    }
 
 /* ======= On load ======= */
 applyTranslation(state.lang);

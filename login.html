@@ -110,9 +110,14 @@
             <h2>تسجيل الدخول</h2>
             
             <button id="googleLoginBtn" class="btn btn-google">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" width="20">
-                <span>المتابعة باستخدام جوجل</span>
-            </button>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" width="20">
+    <span>المتابعة باستخدام جوجل</span>
+</button>
+
+<button id="githubLoginBtn" class="btn btn-secondary" style="margin-top: 10px;">
+    <i class="fab fa-github"></i>
+    <span>المتابعة باستخدام GitHub</span>
+</button>
             
             <div class="separator">أو</div>
 
@@ -126,6 +131,13 @@
             </div>
             
             <p id="errorMessage"></p>
+
+<div style="display: flex; align-items: center; margin-top: 20px; color: var(--text-muted); font-size: 14px;">
+    <input type="checkbox" id="termsCheckbox" style="margin-left: 8px;">
+    <label for="termsCheckbox">
+        أوافق على <a href="PrivacyandTermsofService.html" target="_blank" style="color: var(--primary-color);">شروط الخدمة</a>
+    </label>
+</div>
 
             <button id="loginBtn" class="btn btn-primary">تسجيل الدخول</button>
             <button id="signupBtn" class="btn btn-secondary">إنشاء حساب جديد</button>
@@ -141,7 +153,8 @@
         // DOM Elements
         const loginBtn = document.getElementById('loginBtn');
         const signupBtn = document.getElementById('signupBtn');
-        const googleLoginBtn = document.getElementById('googleLoginBtn');
+        const githubLoginBtn = document.getElementById('githubLoginBtn');
+        const termsCheckbox = document.getElementById('termsCheckbox');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         const errorMessage = document.getElementById('errorMessage');
@@ -187,6 +200,7 @@
 
         // Redirect user if already logged in
         window.addEventListener('load', async () => {
+           updateButtonState(); // <-- أضف هذا السطر هنا
             const { data: { session } } = await supabaseClient.auth.getSession();
             if (session) {
                 window.location.href = "home.html";
@@ -199,6 +213,23 @@
                 window.location.href = 'home.html';
             }
         });
+        function updateButtonState() {
+    const isChecked = termsCheckbox.checked;
+    googleLoginBtn.disabled = !isChecked;
+    githubLoginBtn.disabled = !isChecked;
+    // Optional: change opacity to give visual feedback
+    googleLoginBtn.style.opacity = isChecked ? '1' : '0.5';
+    githubLoginBtn.style.opacity = isChecked ? '1' : '0.5';
+}
+githubLoginBtn.addEventListener('click', async () => {
+    const { error } = await supabaseClient.auth.signInWithOAuth({
+        provider: 'github',
+    });
+    if (error) {
+        showError("❌ لم نتمكن من تسجيل الدخول عبر GitHub: " + error.message);
+    }
+});
+termsCheckbox.addEventListener('change', updateButtonState);
     </script>
 </body>
 </html>
