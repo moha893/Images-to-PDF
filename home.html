@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الصفحة الرئيسية — Mega</title>
+    <title>لوحة التحكم — Mega</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
@@ -21,101 +21,275 @@
             --text-muted: #a0a0a0;
             --border-color: rgba(255, 255, 255, 0.1);
             --danger-color: #fb7185;
+            --success-color: #10b981;
         }
         body { font-family: "Cairo", sans-serif; background-color: var(--dark-bg); color: var(--text-color); margin: 0; line-height: 1.6; }
         .container { width: 90%; max-width: 1100px; margin: 0 auto; }
+        
+        /* Header */
         .site-header { width: 100%; background-color: var(--secondary-bg); padding: 15px 0; border-bottom: 1px solid var(--border-color); }
         .site-header .container { display: flex; justify-content: space-between; align-items: center; }
-        .logo-area { display: flex; align-items: center; }
+        .logo-area { display: flex; align-items: center; text-decoration: none; color: var(--text-color); }
         .logo { width: 45px; height: 45px; margin-inline-end: 12px; }
         .site-name { font-size: 24px; font-weight: 700; }
-        .user-profile { display: flex; align-items: center; gap: 15px; }
-        .profile-pic { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-color); }
-        .user-name { font-weight: 700; }
+        .user-nav { display: flex; align-items: center; gap: 15px; }
+        .nav-user-pic { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-color); }
         .logout-btn { background: none; border: 1px solid var(--danger-color); color: var(--danger-color); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: 700; transition: all 0.2s; }
         .logout-btn:hover { background: var(--danger-color); color: var(--text-color); }
-        .main-content { padding: 50px 0; text-align: center; }
-        .welcome-card { background-color: var(--card-bg); padding: 40px; border-radius: 12px; border: 1px solid var(--border-color); max-width: 600px; margin: 0 auto; }
-        .welcome-card h1 { font-size: 2.5em; margin-top: 0; }
-        .settings-btn { background-color: var(--primary-color); color: var(--text-color); padding: 12px 30px; border: none; border-radius: 8px; font-size: 1em; font-weight: 700; cursor: pointer; transition: background-color 0.3s; margin-top: 20px; }
-        .settings-btn:hover { background-color: var(--primary-hover); }
-        .settings-btn i { margin-inline-end: 8px; }
+        
+        /* Main Content Grid */
+        .dashboard-grid { padding: 40px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        
+        /* Card Base Style */
+        .card { background-color: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .card-header { display: flex; align-items: center; gap: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px; }
+        .card-header i { font-size: 1.5em; color: var(--primary-color); }
+        .card-title { font-size: 1.4em; margin: 0; }
+        
+        /* Profile Card */
+        .profile-card-body { text-align: center; }
+        .main-profile-pic { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary-color); margin-bottom: 15px; }
+        .user-main-name { font-size: 1.8em; font-weight: 700; margin: 0; }
+        .user-main-email { color: var(--text-muted); margin-top: 5px; }
+
+        /* Settings Card */
+        .settings-list { list-style: none; padding: 0; margin: 0; }
+        .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border-color); }
+        .settings-item:last-child { border-bottom: none; }
+        .settings-item-label { display: flex; align-items: center; gap: 12px; }
+        .settings-item-label i { width: 20px; text-align: center; color: var(--text-muted); }
+        .btn-setting { background-color: var(--secondary-bg); color: var(--text-color); border: 1px solid var(--border-color); padding: 8px 18px; border-radius: 8px; cursor: pointer; transition: background-color 0.2s; }
+        .btn-setting:hover { background-color: var(--primary-color); border-color: var(--primary-color); }
+
+        /* Modal for Profile Picture Upload */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .modal-content { background: var(--card-bg); padding: 30px; border-radius: 12px; width: 90%; max-width: 450px; text-align: center; border: 1px solid var(--border-color); }
+        .modal-content h2 { margin-top: 0; }
+        .modal-content p { color: var(--text-muted); }
+        #upload-feedback { margin-top: 15px; font-weight: bold; }
+        .file-input-container { margin: 20px 0; }
+        .file-input-container input[type="file"] { display: none; }
+        .file-input-label { background: var(--primary-color); color: white; padding: 12px 25px; border-radius: 8px; cursor: pointer; display: inline-block; }
+        .file-input-label:hover { background: var(--primary-hover); }
+        .modal-actions { display: flex; gap: 15px; justify-content: center; margin-top: 20px; }
     </style>
 </head>
 <body>
 
     <header class="site-header">
         <div class="container">
-            <div class="logo-area">
+            <a href="index.html" class="logo-area">
                 <img src="https://i.ibb.co/cKDWYpLm/Mega-Picsart-25-10-15-13-30-25-345.webp" alt="Mega Logo" class="logo">
                 <span class="site-name">Mega</span>
-            </div>
-            <div class="user-profile">
-                <img id="profilePic" src="" alt="Profile" class="profile-pic" style="display: none;">
-                <span class="user-name" id="userName"></span>
-                <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+            </a>
+            <div class="user-nav">
+                <img id="navProfilePic" src="placeholder.jpg" alt="Profile" class="nav-user-pic">
+                <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></button>
             </div>
         </div>
     </header>
 
-    <main class="main-content">
-        <div class="container">
-            <div class="welcome-card">
-                <h1 id="welcomeMessage"></h1>
-                <p>هذه هي لوحة التحكم الخاصة بك. يمكنك الوصول إلى ميزاتك الحصرية من هنا.</p>
-                <button class="settings-btn" id="settingsBtn">
-                    <i class="fas fa-cog"></i> إعدادات الحساب
-                </button>
+    <main class="container">
+        <div class="dashboard-grid">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-user-circle"></i>
+                    <h2 class="card-title">الملف الشخصي</h2>
+                </div>
+                <div class="profile-card-body">
+                    <img id="mainProfilePic" src="placeholder.jpg" alt="Profile Picture" class="main-profile-pic">
+                    <h3 id="userMainName" class="user-main-name">...</h3>
+                    <p id="userMainEmail" class="user-main-email">...</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-cogs"></i>
+                    <h2 class="card-title">الإعدادات</h2>
+                </div>
+                <ul class="settings-list">
+                    <li class="settings-item">
+                        <div class="settings-item-label"><i class="fas fa-image"></i><span>تغيير صورة الملف الشخصي</span></div>
+                        <button class="btn-setting" onclick="document.getElementById('profilePicInput').click();">تغيير</button>
+                        <input type="file" id="profilePicInput" accept="image/png, image/jpeg" style="display: none;">
+                    </li>
+                    <li class="settings-item">
+                        <div class="settings-item-label"><i class="fas fa-key"></i><span>إعادة تعيين كلمة المرور</span></div>
+                        <button class="btn-setting" id="resetPasswordBtn">إرسال رابط</button>
+                    </li>
+                    <li class="settings-item">
+                        <div class="settings-item-label"><i class="fas fa-rocket"></i><span>الترقية إلى Pro</span></div>
+                        <a href="pro.html" class="btn-setting">ترقية</a>
+                    </li>
+                    <li class="settings-item">
+                        <div class="settings-item-label"><i class="fas fa-language"></i><span>تغيير اللغة</span></div>
+                        <button class="btn-setting">قريباً</button>
+                    </li>
+                </ul>
             </div>
         </div>
     </main>
 
+    <div class="modal-overlay" id="uploadModal">
+        <div class="modal-content">
+            <h2>مرحباً بك في Mega!</h2>
+            <p>لإكمال ملفك الشخصي، يرجى رفع صورة. (الحجم الأقصى: 1MB)</p>
+            <div class="file-input-container">
+                <input type="file" id="modalFileInput" accept="image/png, image/jpeg">
+                <label for="modalFileInput" class="file-input-label"><i class="fas fa-upload"></i> اختر صورة</label>
+            </div>
+            <p id="upload-feedback"></p>
+            <div class="modal-actions">
+                <button class="btn-setting" id="skipUploadBtn">تخطي الآن</button>
+            </div>
+        </div>
+    </div>
+    
     <script>
         // Supabase Config
         const SUPABASE_URL = "https://vayuuzbcgemrlgvmktzl.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZheXV1emJjZ2Vtcmxndm1rdHpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0NDA4MDQsImV4cCI6MjA3NjAxNjgwNH0.yQIuNEb8QRBOaSGW0cKB8cQvPpZMWG7T_0gnufjVa0g";
-        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         // DOM Elements
-        const userNameEl = document.getElementById('userName');
-        const welcomeMessageEl = document.getElementById('welcomeMessage');
-        const profilePicEl = document.getElementById('profilePic');
+        const navProfilePic = document.getElementById('navProfilePic');
+        const mainProfilePic = document.getElementById('mainProfilePic');
+        const userMainName = document.getElementById('userMainName');
+        const userMainEmail = document.getElementById('userMainEmail');
         const logoutBtn = document.getElementById('logoutBtn');
+        const resetPasswordBtn = document.getElementById('resetPasswordBtn');
+        const profilePicInput = document.getElementById('profilePicInput');
+        const modal = document.getElementById('uploadModal');
+        const modalFileInput = document.getElementById('modalFileInput');
+        const skipUploadBtn = document.getElementById('skipUploadBtn');
+        const uploadFeedback = document.getElementById('upload-feedback');
+        
+        let currentUser;
 
-        // Check user session on page load
+        // --- Main Function on Page Load ---
         window.addEventListener('load', async () => {
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            
-            if (session) {
-                const user = session.user;
-                // Get user metadata from Google
-                const userDisplayName = user.user_metadata?.full_name || user.email;
-                const userAvatar = user.user_metadata?.avatar_url;
-
-                // Update UI
-                userNameEl.textContent = userDisplayName;
-                welcomeMessageEl.textContent = `أهلاً بك، ${userDisplayName}!`;
-                
-                if (userAvatar) {
-                    profilePicEl.src = userAvatar;
-                    profilePicEl.style.display = 'block';
-                }
-                
-            } else {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
                 window.location.href = "login.html";
+                return;
+            }
+            
+            currentUser = session.user;
+            await displayUserInfo();
+
+            // Check if it's the first email login and avatar is missing
+            const isFirstLogin = !currentUser.user_metadata.avatar_url && currentUser.app_metadata.provider === 'email';
+            if (isFirstLogin) {
+                modal.style.display = 'flex';
             }
         });
+
+        // --- Display User Info ---
+        async function displayUserInfo() {
+            const user = currentUser;
+            const defaultAvatar = 'https://i.ibb.co/qCbQ2Yc/default-avatar.png'; // A default placeholder image
+            
+            const displayName = user.user_metadata?.full_name || user.email.split('@')[0];
+            const email = user.email;
+            let avatarUrl = user.user_metadata?.avatar_url;
+
+            if (avatarUrl) {
+                // Add a timestamp to bypass browser cache for updated images
+                avatarUrl = `${avatarUrl}?t=${new Date().getTime()}`;
+            }
+
+            userMainName.textContent = displayName;
+            userMainEmail.textContent = email;
+            navProfilePic.src = avatarUrl || defaultAvatar;
+            mainProfilePic.src = avatarUrl || defaultAvatar;
+        }
+
+        // --- Upload Profile Picture ---
+        async function uploadProfilePicture(file) {
+            if (!file) return;
+            
+            // 1. Validate file size (max 1MB)
+            if (file.size > 1 * 1024 * 1024) {
+                uploadFeedback.textContent = "❌ حجم الملف كبير جدًا. الأقصى 1MB.";
+                uploadFeedback.style.color = 'var(--danger-color)';
+                return;
+            }
+            
+            uploadFeedback.textContent = "⏳ جاري رفع الصورة...";
+            uploadFeedback.style.color = 'var(--text-muted)';
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${currentUser.id}.${fileExt}`;
+            const filePath = `avatars/${fileName}`;
+
+            // 2. Upload to Supabase Storage
+            const { error: uploadError } = await supabase.storage
+                .from('profiles')
+                .upload(filePath, file, { upsert: true }); // upsert: true overwrites existing file
+
+            if (uploadError) {
+                uploadFeedback.textContent = "❌ خطأ في الرفع: " + uploadError.message;
+                uploadFeedback.style.color = 'var(--danger-color)';
+                return;
+            }
+
+            // 3. Get Public URL
+            const { data: urlData } = supabase.storage
+                .from('profiles')
+                .getPublicUrl(filePath);
+
+            if (!urlData) {
+                uploadFeedback.textContent = "❌ لم نتمكن من الحصول على رابط الصورة.";
+                return;
+            }
+
+            // 4. Update user metadata
+            const { error: updateError } = await supabase.auth.updateUser({
+                data: { avatar_url: urlData.publicUrl }
+            });
+
+            if (updateError) {
+                uploadFeedback.textContent = "❌ خطأ في تحديث الملف الشخصي.";
+                return;
+            }
+            
+            // 5. Success
+            uploadFeedback.textContent = "✅ تم تحديث الصورة بنجاح!";
+            uploadFeedback.style.color = 'var(--success-color)';
+            await displayUserInfo(); // Refresh UI
+            setTimeout(() => { modal.style.display = 'none'; }, 1500); // Close modal on success
+        }
         
-        // Logout
+        // --- Event Listeners ---
         logoutBtn.addEventListener('click', async () => {
-            await supabaseClient.auth.signOut();
+            await supabase.auth.signOut();
             window.location.href = "login.html";
         });
-        
-        // Settings button
-        document.getElementById('settingsBtn').addEventListener('click', () => {
-            alert('صفحة الإعدادات قيد الإنشاء!');
+
+        resetPasswordBtn.addEventListener('click', async () => {
+            const { error } = await supabase.auth.resetPasswordForEmail(currentUser.email);
+            if (error) {
+                alert("❌ خطأ: " + error.message);
+            } else {
+                alert("✅ تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.");
+            }
         });
+
+        // For changing picture from settings
+        profilePicInput.addEventListener('change', (e) => {
+            uploadProfilePicture(e.target.files[0]);
+            // You might want to add feedback near the settings button too
+        });
+        
+        // For uploading from the modal
+        modalFileInput.addEventListener('change', (e) => {
+            uploadProfilePicture(e.target.files[0]);
+        });
+
+        skipUploadBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
     </script>
 </body>
 </html>
