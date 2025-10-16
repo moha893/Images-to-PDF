@@ -11,9 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
-        /* ================================================ */
-        /* ==     CSS: نفس تصميم باقي صفحات الموقع       == */
-        /* ================================================ */
         :root {
             --primary-color: #007bff;
             --primary-hover: #0056b3;
@@ -24,121 +21,25 @@
             --text-muted: #a0a0a0;
             --border-color: rgba(255, 255, 255, 0.1);
             --danger-color: #fb7185;
-            --success-color: #10b981;
         }
-
-        body {
-            font-family: "Cairo", sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--text-color);
-            margin: 0;
-            line-height: 1.6;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        
-        /* تصميم الهيدر (رأس الصفحة) */
-        .site-header {
-            width: 100%;
-            background-color: var(--secondary-bg);
-            padding: 15px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .site-header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo-area {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo {
-            width: 45px;
-            height: 45px;
-            margin-inline-end: 12px;
-        }
-
-        .site-name {
-            font-size: 24px;
-            font-weight: 700;
-        }
-        
-        /* تصميم قسم المستخدم في الهيدر */
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .user-profile .user-name {
-            font-weight: 700;
-        }
-        
-        .logout-btn {
-            background: none;
-            border: 1px solid var(--danger-color);
-            color: var(--danger-color);
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: all 0.2s;
-        }
-
-        .logout-btn:hover {
-            background: var(--danger-color);
-            color: var(--text-color);
-        }
-        
-        /* تصميم المحتوى الرئيسي للصفحة */
-        .main-content {
-            padding: 50px 0;
-            text-align: center;
-        }
-        
-        .welcome-card {
-            background-color: var(--card-bg);
-            padding: 40px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .welcome-card h1 {
-            font-size: 2.5em;
-            margin-top: 0;
-        }
-        
-        .settings-btn {
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1em;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-top: 20px;
-        }
-        
-        .settings-btn:hover {
-            background-color: var(--primary-hover);
-        }
-        
-        .settings-btn i {
-            margin-inline-end: 8px;
-        }
-
+        body { font-family: "Cairo", sans-serif; background-color: var(--dark-bg); color: var(--text-color); margin: 0; line-height: 1.6; }
+        .container { width: 90%; max-width: 1100px; margin: 0 auto; }
+        .site-header { width: 100%; background-color: var(--secondary-bg); padding: 15px 0; border-bottom: 1px solid var(--border-color); }
+        .site-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo-area { display: flex; align-items: center; }
+        .logo { width: 45px; height: 45px; margin-inline-end: 12px; }
+        .site-name { font-size: 24px; font-weight: 700; }
+        .user-profile { display: flex; align-items: center; gap: 15px; }
+        .profile-pic { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-color); }
+        .user-name { font-weight: 700; }
+        .logout-btn { background: none; border: 1px solid var(--danger-color); color: var(--danger-color); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: 700; transition: all 0.2s; }
+        .logout-btn:hover { background: var(--danger-color); color: var(--text-color); }
+        .main-content { padding: 50px 0; text-align: center; }
+        .welcome-card { background-color: var(--card-bg); padding: 40px; border-radius: 12px; border: 1px solid var(--border-color); max-width: 600px; margin: 0 auto; }
+        .welcome-card h1 { font-size: 2.5em; margin-top: 0; }
+        .settings-btn { background-color: var(--primary-color); color: var(--text-color); padding: 12px 30px; border: none; border-radius: 8px; font-size: 1em; font-weight: 700; cursor: pointer; transition: background-color 0.3s; margin-top: 20px; }
+        .settings-btn:hover { background-color: var(--primary-hover); }
+        .settings-btn i { margin-inline-end: 8px; }
     </style>
 </head>
 <body>
@@ -150,6 +51,7 @@
                 <span class="site-name">Mega</span>
             </div>
             <div class="user-profile">
+                <img id="profilePic" src="" alt="Profile" class="profile-pic" style="display: none;">
                 <span class="user-name" id="userName"></span>
                 <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
             </div>
@@ -159,71 +61,61 @@
     <main class="main-content">
         <div class="container">
             <div class="welcome-card">
-                 <h1 id="welcomeMessage"></h1>
+                <h1 id="welcomeMessage"></h1>
                 <p>هذه هي لوحة التحكم الخاصة بك. يمكنك الوصول إلى ميزاتك الحصرية من هنا.</p>
                 <button class="settings-btn" id="settingsBtn">
-                    <i class="fas fa-cog"></i>
-                    إعدادات الحساب
+                    <i class="fas fa-cog"></i> إعدادات الحساب
                 </button>
             </div>
         </div>
     </main>
 
     <script>
-        // ================================================
-        // ==     JavaScript: لإدارة جلسة المستخدم      ==
-        // ================================================
-        
-        // 1. تعريف معلومات الاتصال بـ Supabase
+        // Supabase Config
         const SUPABASE_URL = "https://vayuuzbcgemrlgvmktzl.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZheXV1emJjZ2Vtcmxndm1rdHpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0NDA4MDQsImV4cCI6MjA3NjAxNjgwNH0.yQIuNEb8QRBOaSGW0cKB8cQvPpZMWG7T_0gnufjVa0g";
-
-        // 2. إنشاء عميل Supabase
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         
-        // 3. الحصول على عناصر الصفحة
+        // DOM Elements
         const userNameEl = document.getElementById('userName');
         const welcomeMessageEl = document.getElementById('welcomeMessage');
+        const profilePicEl = document.getElementById('profilePic');
         const logoutBtn = document.getElementById('logoutBtn');
-        const settingsBtn = document.getElementById('settingsBtn');
 
-        // 4. التحقق من حالة تسجيل الدخول عند تحميل الصفحة
+        // Check user session on page load
         window.addEventListener('load', async () => {
-            // جلب جلسة المستخدم الحالية
-            const { data: { session }, error } = await supabaseClient.auth.getSession();
+            const { data: { session } } = await supabaseClient.auth.getSession();
             
             if (session) {
-                // إذا كان هناك جلسة (المستخدم مسجل دخوله)
                 const user = session.user;
-                // نعرض البريد الإلكتروني كاسم للمستخدم
-                const userDisplayName = user.email; 
-                
-                // تحديث العناصر في الصفحة بمعلومات المستخدم
+                // Get user metadata from Google
+                const userDisplayName = user.user_metadata?.full_name || user.email;
+                const userAvatar = user.user_metadata?.avatar_url;
+
+                // Update UI
                 userNameEl.textContent = userDisplayName;
                 welcomeMessageEl.textContent = `أهلاً بك، ${userDisplayName}!`;
                 
+                if (userAvatar) {
+                    profilePicEl.src = userAvatar;
+                    profilePicEl.style.display = 'block';
+                }
+                
             } else {
-                // إذا لم يكن هناك جلسة، أعد توجيه المستخدم إلى صفحة تسجيل الدخول
                 window.location.href = "login.html";
             }
         });
         
-        // 5. وظيفة تسجيل الخروج
+        // Logout
         logoutBtn.addEventListener('click', async () => {
-            const { error } = await supabaseClient.auth.signOut();
-            if (error) {
-                console.error('Error logging out:', error.message);
-            } else {
-                // بعد تسجيل الخروج بنجاح، أعد توجيه المستخدم إلى صفحة تسجيل الدخول
-                window.location.href = "login.html";
-            }
+            await supabaseClient.auth.signOut();
+            window.location.href = "login.html";
         });
         
-        // 6. وظيفة زر الإعدادات (حالياً يعرض رسالة فقط)
-        settingsBtn.addEventListener('click', () => {
+        // Settings button
+        document.getElementById('settingsBtn').addEventListener('click', () => {
             alert('صفحة الإعدادات قيد الإنشاء!');
         });
-
     </script>
 </body>
 </html>

@@ -11,9 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
-        /* ================================================ */
-        /* ==   CSS: نفس تصميم باقي صفحات الموقع   == */
-        /* ================================================ */
         :root {
             --primary-color: #007bff;
             --primary-hover: #0056b3;
@@ -25,11 +22,7 @@
             --border-color: rgba(255, 255, 255, 0.1);
             --danger-color: #fb7185;
         }
-
-        html, body {
-            height: 100%;
-        }
-
+        html, body { height: 100%; }
         body {
             font-family: "Cairo", sans-serif;
             background-color: var(--dark-bg);
@@ -40,54 +33,18 @@
             align-items: center;
             line-height: 1.6;
         }
-
-        .container {
-            width: 90%;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        
-        /* تصميم الهيدر (رأس الصفحة) */
+        .container { width: 90%; max-width: 1100px; margin: 0 auto; }
         .site-header {
             width: 100%;
             background-color: var(--secondary-bg);
             padding: 15px 0;
             border-bottom: 1px solid var(--border-color);
         }
-
-        .site-header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo-area a {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: var(--text-color);
-        }
-
-        .logo {
-            width: 45px;
-            height: 45px;
-            margin-inline-end: 12px;
-        }
-
-        .site-name {
-            font-size: 24px;
-            font-weight: 700;
-        }
-        
-        /* تصميم صندوق تسجيل الدخول */
-        .login-wrapper {
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
-        
+        .site-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo-area a { display: flex; align-items: center; text-decoration: none; color: var(--text-color); }
+        .logo { width: 45px; height: 45px; margin-inline-end: 12px; }
+        .site-name { font-size: 24px; font-weight: 700; }
+        .login-wrapper { flex-grow: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
         .login-box {
             background-color: var(--card-bg);
             padding: 40px;
@@ -97,41 +54,19 @@
             width: 100%;
             max-width: 400px;
         }
-
-        .login-box h2 {
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 25px;
-            font-size: 2em;
-            color: var(--primary-color);
-        }
-        
-        /* تصميم حقول الإدخال */
-        .input-group {
-            position: relative;
-            margin-bottom: 25px;
-        }
-
+        .login-box h2 { text-align: center; margin-top: 0; margin-bottom: 25px; font-size: 2em; color: var(--primary-color); }
+        .input-group { position: relative; margin-bottom: 25px; }
         .input-group input {
             width: 100%;
-            padding: 12px 15px 12px 45px; /* مساحة للأيقونة */
+            padding: 12px 15px 12px 45px;
             background: var(--secondary-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             color: var(--text-color);
             font-size: 16px;
-            box-sizing: border-box; /* لضمان أن padding لا يزيد العرض */
+            box-sizing: border-box;
         }
-        
-        .input-group i {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            right: 15px; /* الأيقونة على اليمين */
-            color: var(--text-muted);
-        }
-
-        /* تصميم الأزرار */
+        .input-group i { position: absolute; top: 50%; transform: translateY(-50%); right: 15px; color: var(--text-muted); }
         .btn {
             width: 100%;
             padding: 12px 20px;
@@ -142,37 +77,19 @@
             font-size: 16px;
             font-weight: 700;
             transition: background-color 0.3s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
-        
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: var(--text-color);
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-        }
-        
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--text-muted);
-            border: 1px solid var(--border-color);
-        }
-        
-        .btn-secondary:hover {
-            background-color: var(--secondary-bg);
-            color: var(--text-color);
-        }
-        
-        /* رسائل الخطأ */
-        #errorMessage {
-            color: var(--danger-color);
-            text-align: center;
-            margin-top: 15px;
-            display: none; /* مخفية بشكل افتراضي */
-        }
-
+        .btn-primary { background-color: var(--primary-color); color: var(--text-color); }
+        .btn-primary:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
+        .btn-secondary { background-color: transparent; color: var(--text-muted); border: 1px solid var(--border-color); }
+        .btn-secondary:hover { background-color: var(--secondary-bg); color: var(--text-color); }
+        .btn-google { background-color: #ffffff; color: #444; }
+        .btn-google:hover { background-color: #f2f2f2; }
+        .separator { text-align: center; color: var(--text-muted); margin: 20px 0; }
+        #errorMessage { color: var(--danger-color); text-align: center; margin-top: 15px; display: none; }
     </style>
 </head>
 <body>
@@ -180,7 +97,8 @@
     <header class="site-header">
         <div class="container">
             <div class="logo-area">
-                <a href="index.html"> <img src="https://i.ibb.co/cKDWYpLm/Mega-Picsart-25-10-15-13-30-25-345.webp" alt="Mega Logo" class="logo">
+                <a href="index.html">
+                    <img src="https://i.ibb.co/cKDWYpLm/Mega-Picsart-25-10-15-13-30-25-345.webp" alt="Mega Logo" class="logo">
                     <span class="site-name">Mega</span>
                 </a>
             </div>
@@ -190,6 +108,14 @@
     <main class="login-wrapper">
         <div class="login-box">
             <h2>تسجيل الدخول</h2>
+            
+            <button id="googleLoginBtn" class="btn btn-google">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" width="20">
+                <span>المتابعة باستخدام جوجل</span>
+            </button>
+            
+            <div class="separator">أو</div>
+
             <div class="input-group">
                 <i class="fas fa-envelope"></i>
                 <input type="email" id="email" placeholder="البريد الإلكتروني" required>
@@ -199,73 +125,78 @@
                 <input type="password" id="password" placeholder="كلمة المرور" required>
             </div>
             
-            <p id="errorMessage"></p> <button id="loginBtn" class="btn btn-primary">تسجيل الدخول</button>
+            <p id="errorMessage"></p>
+
+            <button id="loginBtn" class="btn btn-primary">تسجيل الدخول</button>
             <button id="signupBtn" class="btn btn-secondary">إنشاء حساب جديد</button>
         </div>
     </main>
 
     <script>
-        // ================================================
-        // ==  JavaScript: نفس وظائف Supabase السابقة  ==
-        // ================================================
-
-        // 1. تعريف معلومات الاتصال بـ Supabase
+        // Supabase Config
         const SUPABASE_URL = "https://vayuuzbcgemrlgvmktzl.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZheXV1emJjZ2Vtcmxndm1rdHpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0NDA4MDQsImV4cCI6MjA3NjAxNjgwNH0.yQIuNEb8QRBOaSGW0cKB8cQvPpZMWG7T_0gnufjVa0g";
-
-        // 2. إنشاء عميل Supabase
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         
-        // 3. الحصول على عناصر الصفحة
+        // DOM Elements
         const loginBtn = document.getElementById('loginBtn');
         const signupBtn = document.getElementById('signupBtn');
+        const googleLoginBtn = document.getElementById('googleLoginBtn');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         const errorMessage = document.getElementById('errorMessage');
 
-        // دالة لإظهار رسالة الخطأ
         function showError(message) {
             errorMessage.textContent = message;
             errorMessage.style.display = 'block';
         }
         
-        // 4. وظيفة تسجيل الدخول
+        // Email/Password Login
         loginBtn.addEventListener('click', async () => {
-            errorMessage.style.display = 'none'; // إخفاء الرسالة القديمة
-            const email = emailInput.value;
-            const password = passwordInput.value;
-
-            const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-
-            if (error) {
-                showError("❌ خطأ: " + error.message);
-            } else {
-                // إذا نجح تسجيل الدخول، انتقل إلى صفحة home.html
-                window.location.href = "home.html";
-            }
+            errorMessage.style.display = 'none';
+            const { error } = await supabaseClient.auth.signInWithPassword({
+                email: emailInput.value,
+                password: passwordInput.value
+            });
+            if (error) showError("❌ " + error.message);
         });
 
-        // 5. وظيفة إنشاء حساب جديد
+        // Email/Password Sign Up
         signupBtn.addEventListener('click', async () => {
-            errorMessage.style.display = 'none'; // إخفاء الرسالة القديمة
-            const email = emailInput.value;
-            const password = passwordInput.value;
-
-            const { data, error } = await supabaseClient.auth.signUp({ email, password });
-
+            errorMessage.style.display = 'none';
+            const { error } = await supabaseClient.auth.signUp({
+                email: emailInput.value,
+                password: passwordInput.value
+            });
             if (error) {
-                showError("❌ خطأ: " + error.message);
+                showError("❌ " + error.message);
             } else {
-                alert("✅ تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول.");
+                alert("✅ تم إنشاء الحساب! يمكنك الآن تسجيل الدخول.");
             }
         });
-        
-        // 6. التحقق إذا كان المستخدم مسجلاً دخوله بالفعل عند تحميل الصفحة
+
+        // **NEW**: Google Sign-In Function
+        googleLoginBtn.addEventListener('click', async () => {
+            const { error } = await supabaseClient.auth.signInWithOAuth({
+                provider: 'google',
+            });
+            if (error) {
+                showError("❌ لم نتمكن من تسجيل الدخول عبر جوجل: " + error.message);
+            }
+        });
+
+        // Redirect user if already logged in
         window.addEventListener('load', async () => {
             const { data: { session } } = await supabaseClient.auth.getSession();
             if (session) {
-                // إذا كان المستخدم مسجلاً دخوله، انقله مباشرة إلى صفحة home.html
                 window.location.href = "home.html";
+            }
+        });
+        
+        // Listen for auth state changes (login, logout)
+        supabaseClient.auth.onAuthStateChange((event, session) => {
+            if (event === 'SIGNED_IN') {
+                window.location.href = 'home.html';
             }
         });
     </script>
