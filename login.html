@@ -1,67 +1,273 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تسجيل الدخول / إنشاء حساب</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول — Mega</title>
 
-<!-- استدعاء Supabase النسخة الرسمية UMD -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-<style>
-body { font-family: Arial; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f0f0; }
-.login-box { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); width: 320px; }
-input { display: block; margin: 15px 0; padding: 10px; width: 100%; }
-button { padding: 10px 20px; width: 100%; margin-top: 10px; background: #4CAF50; color: white; border: none; cursor: pointer; }
-button:hover { background: #45a049; }
-h2 { text-align: center; }
-</style>
+    <style>
+        /* ================================================ */
+        /* ==   CSS: نفس تصميم باقي صفحات الموقع   == */
+        /* ================================================ */
+        :root {
+            --primary-color: #007bff;
+            --primary-hover: #0056b3;
+            --dark-bg: #121212;
+            --secondary-bg: #1e1e1e;
+            --card-bg: #2a2a2a;
+            --text-color: #ffffff;
+            --text-muted: #a0a0a0;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --danger-color: #fb7185;
+        }
 
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: "Cairo", sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        /* تصميم الهيدر (رأس الصفحة) */
+        .site-header {
+            width: 100%;
+            background-color: var(--secondary-bg);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .site-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-area a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .logo {
+            width: 45px;
+            height: 45px;
+            margin-inline-end: 12px;
+        }
+
+        .site-name {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        /* تصميم صندوق تسجيل الدخول */
+        .login-wrapper {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .login-box {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            border: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-box h2 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 2em;
+            color: var(--primary-color);
+        }
+        
+        /* تصميم حقول الإدخال */
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px 12px 45px; /* مساحة للأيقونة */
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 16px;
+            box-sizing: border-box; /* لضمان أن padding لا يزيد العرض */
+        }
+        
+        .input-group i {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 15px; /* الأيقونة على اليمين */
+            color: var(--text-muted);
+        }
+
+        /* تصميم الأزرار */
+        .btn {
+            width: 100%;
+            padding: 12px 20px;
+            margin-top: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--secondary-bg);
+            color: var(--text-color);
+        }
+        
+        /* رسائل الخطأ */
+        #errorMessage {
+            color: var(--danger-color);
+            text-align: center;
+            margin-top: 15px;
+            display: none; /* مخفية بشكل افتراضي */
+        }
+
+    </style>
 </head>
 <body>
-<div class="login-box">
-    <h2>تسجيل الدخول / إنشاء حساب</h2>
-    <input type="email" id="email" placeholder="الإيميل">
-    <input type="password" id="password" placeholder="كلمة المرور">
-    <button id="loginBtn">تسجيل الدخول</button>
-    <button id="signupBtn">إنشاء حساب جديد</button>
-</div>
 
-<script>
-  // إنشاء عميل Supabase
-  const SUPABASE_URL = "https://vayuuzbcgemrlgvmktzl.supabase.co";  // ضع الرابط الخاص بك
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZheXV1emJjZ2Vtcmxndm1rdHpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0NDA4MDQsImV4cCI6MjA3NjAxNjgwNH0.yQIuNEb8QRBOaSGW0cKB8cQvPpZMWG7T_0gnufjVa0g"; // ضع مفتاح المشروع
+    <header class="site-header">
+        <div class="container">
+            <div class="logo-area">
+                <a href="index.html"> <img src="https://i.ibb.co/cKDWYpLm/Mega-Picsart-25-10-15-13-30-25-345.webp" alt="Mega Logo" class="logo">
+                    <span class="site-name">Mega</span>
+                </a>
+            </div>
+        </div>
+    </header>
 
-  // هنا نستخدم window.supabase لتفادي المشاكل
-  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    <main class="login-wrapper">
+        <div class="login-box">
+            <h2>تسجيل الدخول</h2>
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" placeholder="كلمة المرور" required>
+            </div>
+            
+            <p id="errorMessage"></p> <button id="loginBtn" class="btn btn-primary">تسجيل الدخول</button>
+            <button id="signupBtn" class="btn btn-secondary">إنشاء حساب جديد</button>
+        </div>
+    </main>
 
-  // تسجيل الدخول
-  document.getElementById('loginBtn').addEventListener('click', async () => {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    <script>
+        // ================================================
+        // ==  JavaScript: نفس وظائف Supabase السابقة  ==
+        // ================================================
 
-    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        // 1. تعريف معلومات الاتصال بـ Supabase
+        const SUPABASE_URL = "https://vayuuzbcgemrlgvmktzl.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZheXV1emJjZ2Vtcmxndm1rdHpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0NDA4MDQsImV4cCI6MjA3NjAxNjgwNH0.yQIuNEb8QRBOaSGW0cKB8cQvPpZMWG7T_0gnufjVa0g";
 
-    if (error) alert("❌ خطأ في تسجيل الدخول: " + error.message);
-    else window.location.href = "home.html";
-  });
+        // 2. إنشاء عميل Supabase
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // 3. الحصول على عناصر الصفحة
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const errorMessage = document.getElementById('errorMessage');
 
-  // إنشاء حساب جديد
-  document.getElementById('signupBtn').addEventListener('click', async () => {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+        // دالة لإظهار رسالة الخطأ
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+        
+        // 4. وظيفة تسجيل الدخول
+        loginBtn.addEventListener('click', async () => {
+            errorMessage.style.display = 'none'; // إخفاء الرسالة القديمة
+            const email = emailInput.value;
+            const password = passwordInput.value;
 
-    const { data, error } = await supabaseClient.auth.signUp({ email, password });
+            const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
 
-    if (error) alert("❌ خطأ في إنشاء الحساب: " + error.message);
-    else alert("✅ تم إنشاء الحساب، يرجى التحقق من بريدك الإلكتروني إذا لزم الأمر.");
-  });
+            if (error) {
+                showError("❌ خطأ: " + error.message);
+            } else {
+                // إذا نجح تسجيل الدخول، انتقل إلى صفحة home.html
+                window.location.href = "home.html";
+            }
+        });
 
-  // التحقق من تسجيل الدخول عند تحميل الصفحة
-  window.addEventListener('load', async () => {
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    if (session) window.location.href = "home.html";
-  });
-</script>
+        // 5. وظيفة إنشاء حساب جديد
+        signupBtn.addEventListener('click', async () => {
+            errorMessage.style.display = 'none'; // إخفاء الرسالة القديمة
+            const email = emailInput.value;
+            const password = passwordInput.value;
+
+            const { data, error } = await supabaseClient.auth.signUp({ email, password });
+
+            if (error) {
+                showError("❌ خطأ: " + error.message);
+            } else {
+                alert("✅ تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول.");
+            }
+        });
+        
+        // 6. التحقق إذا كان المستخدم مسجلاً دخوله بالفعل عند تحميل الصفحة
+        window.addEventListener('load', async () => {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) {
+                // إذا كان المستخدم مسجلاً دخوله، انقله مباشرة إلى صفحة home.html
+                window.location.href = "home.html";
+            }
+        });
+    </script>
 </body>
 </html>
